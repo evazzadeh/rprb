@@ -1,0 +1,596 @@
+{%extends "display.html"%}
+
+{%block content%}
+<section>
+	{%if iftulogin%}
+	<a href="group" class="roller"><span data-title="مشاهده گروه های پژوهشی">مشاهده گروه های پژوهشی</span></a> |
+	<a href="group/create" class="roller"><span data-title="تشکیل گروه پژوهشی">تشکیل گروه پژوهشی</span></a> |
+
+	<a href="research" class="roller"><span data-title="مشاهده تقاضاهای پژوهشی">مشاهده تقاضاهای پژوهشی</span></a>
+	<p class="alert alert-block alert-info">برای تغییر اطلاعات شناسنامه بر روی ویژگی مورد نظر کلیک کرده و آن را ویرایش کنید.</p>
+	
+	{%endif%}
+
+	<div class="row">
+		<div class="span5">
+
+
+			<table class="profile-data changetime xlogin_{{iftulogin}}" id="users-data" action='profile'>
+				<tbody>
+					<tr><th colspan="2" class="align-center fg-black">پژوهشگر {{d_researchers.type}}</th></tr>
+					<tr>
+						<th>نام</th>
+						<td><label for="firstname">{{d_users.firstname}}</label></td>
+					</tr>
+					<tr>
+						<th>نام خانوادگی</th>
+						<td><label for="lastname">{{d_users.lastname}}</label></td>
+					</tr>
+					<tr>
+						<th>رایانامه</th>
+						<td class="align-left">{{d_users.email}}</td>
+					</tr>
+					<tr>
+						<th>تلفن</th>
+						<td class="align-left"><label for="tel">{{d_users.tel}}</label></td>
+					</tr>
+					<tr>
+						<th>تارنما</th>
+						<td class="align-left"><label for="website">{{d_users.website}}</label></td>
+					</tr>
+
+					<tr>
+						<th>نوع مدرک</th>
+						<td><label for="education">{{d_researchers.education}}</label></td>
+					</tr>
+					<tr>
+						<th>رشته تحصیلی</th>
+						<td><label for="field">{{d_researchers.field}}</label></td>
+					</tr>
+					<tr>
+						<th>سال اخذ مدرک</th>	
+						<td class="align-left"><label for="year">{{d_researchers.year}}</label></td>
+					</tr>
+					<tr>
+						<th>کشور تحصیل</th>
+						<td><label for="country">{{d_researchers.country}}</label></td>
+					</tr>
+					<tr>
+						<th>دانشگاه تحصیلی</th>
+						<td><label for="university">{{d_researchers.university}}</label></td>
+					</tr>
+					<tr>
+						<th>رتبه دانشگاهی</th>
+						<td><label for="adjusted">{{d_researchers.adjusted}}</label></td>
+					</tr>
+					<tr>
+						<th>تعداد مقالات نمایه شده isi</th>
+						<td class="align-left"><label for="isi">{{d_researchers.isi}}</label></td>
+					</tr>
+
+					<tr>
+						{%if d_users.mode=='حقوقی'%}<th>تاریخ ثبت</th>
+						{%else%}<th>تاریخ تولد</th>{%endif%}
+						<td class="align-left"><label for="val_one">{{d_researchers.val_one}}</label></td>
+					</tr>
+					<tr>
+						{%if d_users.mode=='حقوقی'%}<th>شماره ثبت</th>
+						{%else%}<th>کدملی</th>{%endif%}
+						<td class="align-left"><label for="val_two">{{d_researchers.val_two}}</label></td>
+					</tr>
+
+					{%if d_users.mode=='حقیقی'%}
+					<tr>
+						<th>شماره پرونده</th>
+						<td class="align-left"><label for="val_three">{{d_researchers.val_three}}</label></td>
+					</tr>
+					{%endif%}
+
+					<tr>
+						<th>زیرمجموعه فعالیت</th>
+						<td>{{d_researchers.activity_id}}</td>
+					</tr>
+					
+					<tr>
+						<th>درباره پژوهشگر</th>
+						<td><label for="about">{{d_researchers.about}}</label></td>
+					</tr>
+
+				</tbody>
+			</table>
+
+{%if iftulogin%}
+			<table class="profile-data xlogin_{{iftulogin}} changetime" id="users-upload" action='profile'>
+				<tbody>
+					<tr><th colspan="4" class="align-center fg-black">عناوین و مستندات آپلود شده</th></tr>
+					<tr>
+						<th>ردیف</th>
+						<th>عنوان</th>
+						<th>توضیح</th>
+					</tr>
+					{%for d in d_up_list%}
+					<tr rowid="{{d.id}}">
+						<td>{{loop.index}}</td>
+						<td><a target="_blank" href="updfiles/filesuplaod_{{d.addr_id}}/{{d.filename}}.{{d.type}}">{{d.title}}</a></td>
+						<td>{{d.description}}</td>
+						
+					</tr>
+					{% else %}
+					<tr><td colspan="5" class="align-center">تاکتون مدارکی آپلود نشده است</td></tr>
+					{%endfor%}
+					<tr id="goadd-upload">
+						<td colspan="5" class="align-center"><a class='add option-add_{{iftulogin}}'>بارگزاری مدارک</a></td>
+					</tr>
+				</tbody>
+			</table>
+{%endif%}
+
+
+			<table class="profile-data" id="users-group_list">
+				<tbody>
+					<tr><th colspan="4" class="align-center fg-black">وضعیت پژوهشگر در گروه ها</th></tr>
+					<tr>
+						<th>ردیف</th>
+						<th>عنوان گروه</th>
+						<th>سمت</th>
+						<th>وضعیت</th>
+					</tr>
+					{%for d in d_g_list%}
+					<tr>
+						<td>{{loop.index}}</td>
+						<td><a href="group/{{d.group_id}}" class="hint--left" data-hint="{{d.content}}">{{d.title}}</a></td>
+						<td>
+							{%if d.type      == 'admin'%}مدیر این گروه پژوهشی
+							{%elseif d.status != 'active'%}
+							{%elseif d.type  == 'member'%}عضو گروه
+							{%endif%}
+						</td>
+						<td>
+							{%if d.status     == 'awaiting'%}متقاضی عضویت در گروه
+							{%elseif d.status == 'active'%}فعال
+							{%elseif d.status == 'dismissal'%}اخراج توسط مدیر گروه
+							{%elseif d.status == 'quit'%}استعفا
+							{%elseif d.status == 'reject'%}رد تقاضا
+							{%endif%}
+						</td>
+					</tr>
+					{% else %}
+					<tr><td colspan="4" class="align-center">این پژوهشگر در هیچ گروهی عضو نیست!</td></tr>
+					{%endfor%}
+				</tbody>
+			</table>
+
+
+
+
+		</div>
+		<div class="span7">
+
+
+
+
+			<table class="profile-data xlogin_{{iftulogin}} changetime" id="users-patents" action='profile'>
+				<tbody>
+					<tr><th colspan="5" class="align-center fg-black">پتنت های ثبت شده به همراه مشخصات</th></tr>
+					<tr>
+						<th>ردیف</th>
+						<th>عنوان اختراع</th>
+						<th>مکان ثبت</th>
+						<th>شماره ثبت</th>
+						<th>تاریخ ثبت</th>
+					</tr>
+					{%for d in d_r_patents%}
+					<tr rowid="{{d.id}}">
+						<td>{{loop.index}}</td>
+						<td><label for='title'>{{d.title}}</label></td>
+						<td><label for='country'>{{d.country}}</label></td>
+						<td><label for='code'>{{d.code}}</label></td>
+						<td><label for='date'>{{d.date}}</label></td>
+					</tr>
+					{% else %}
+					<tr><td colspan="5" class="align-center">تاکتون پتنت ای ثبت نشده است</td></tr>
+					{%endfor%}
+					<tr id="goadd-patents">
+						<td colspan="5" class="align-center"><a class='add option-add_{{iftulogin}}'>ثبت پتنت</a></td>
+					</tr>
+				</tbody>
+			</table>
+
+
+
+			<table class="profile-data xlogin_{{iftulogin}} changetime" id="users-books" action='profile'>
+				<tbody>
+					<tr><th colspan="5" class="align-center fg-black">عناوین و تعداد کتابهای تالیف، ترجمه و گردآوری شده</th></tr>
+					<tr>
+						<th>ردیف</th>
+						<th>عنوان</th>
+						<th>انتشارات</th>
+						<th>سال</th>
+						<th>مسئولیت</th>
+					</tr>
+					{%for d in d_r_books%}
+					<tr rowid="{{d.id}}">
+						<td>{{loop.index}}</td>
+						<td><label for="title">{{d.title}}</label></td>
+						<td><label for="publisher">{{d.publisher}}</label></td>
+						<td><label for="year">{{d.year}}</label></td>
+						<td><label for="type">{{d.type}}</label></td>
+					</tr>
+					{% else %}
+					<tr><td colspan="5" class="align-center">تاکتون کتابی ثبت نشده است</td></tr>
+					{%endfor%}
+					<tr id="goadd-book">
+						<td colspan="5" class="align-center"><a class='add option-add_{{iftulogin}}'>ثبت کتاب</a></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table class="profile-data xlogin_{{iftulogin}} changetime" id="users-contracts" action='profile'>
+				<tbody>
+					<tr><th colspan="4" class="align-center fg-black">مشخصات سازمانهای طرف قرارداد در حوزه پژوهشی</th></tr>
+					<tr>
+						<th>ردیف</th>
+						<th>نام سازمان</th>
+						<th>شماره تماس</th>
+						<th>عنوان پژوهش</th>
+					</tr>
+					{%for d in d_r_contracts%}
+					<tr rowid="{{d.id}}">
+						<td>{{loop.index}}</td>
+						<td><label for="name">{{d.name}}</label></td>
+						<td><label for="tel">{{d.tel}}</label></td>
+						<td><label for="title">{{d.title}}</label></td>
+					</tr>
+					{% else %}
+					<tr><td colspan="5" class="align-center">تاکتون سابقه ای ثبت نشده است</td></tr>
+					{%endfor%}
+					<tr id="goadd-contracts">
+						<td colspan="5" class="align-center"><a class='add option-add_{{iftulogin}}'>ثبت سازمان</a></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table class="profile-data xlogin_{{iftulogin}} changetime" id="users-seminars" action='profile'>
+				<tbody>
+					<tr><th colspan="5" class="align-center fg-black">عناوین شرکت در سیمنارهای ملی و بین المللی</th></tr>
+					<tr>
+						<th>ردیف</th>
+						<th>نام سمینار/همایش</th>
+						<th>عنوان مقاله</th>
+						<th>زمان ارائه</th>
+						<th>صورت اجرای مقاله</th>
+					</tr>
+					{%for d in d_r_seminars%}
+					<tr rowid="{{d.id}}">
+						<td>{{loop.index}}</td>
+						<td><label for="name">{{d.name}}</label></td>
+						<td><label for="title">{{d.title}}</label></td>
+						<td><label for="date">{{d.date}}</label></td>
+						<td><label for="type">{{d.type}}</label></td>
+					</tr>
+					{% else %}
+					<tr><td colspan="5" class="align-center">تاکتون مستندات حضور در سمینار یا همایش ای ثبت نشده است</td></tr>
+					{%endfor%}
+					<tr id="goadd-seminars">
+						<td colspan="5" class="align-center"><a class='add option-add_{{iftulogin}}'>ثبت سمینار</a></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table class="profile-data xlogin_{{iftulogin}} changetime" id="users-workshops" action='profile'>
+				<tbody>
+					<tr><th colspan="5" class="align-center fg-black">عناوین و مستندات کارگاههای برگزار کننده</th></tr>
+					<tr>
+						<th>ردیف</th>
+						<th>نام کارگاه یا همایش</th>
+						<th>برگزار کننده</th>
+						<th>زمان برگزاری</th>
+						<th>نوع فعالیت</th>
+					</tr>
+					{%for d in d_r_workshops%}
+					<tr rowid="{{d.id}}">
+						<td>{{loop.index}}</td>
+						<td><label for="name">{{d.name}}</label></td>
+						<td><label for="title">{{d.title}}</label></td>
+						<td><label for="date">{{d.date}}</label></td>
+						<td><label for="type">{{d.type}}</label></td>
+					</tr>
+					{% else %}
+					<tr><td colspan="5" class="align-center">تاکتون مستندات برگزاری کارگاه یا همایش ای ثبت نشده است</td></tr>
+					{%endfor%}
+					<tr id="goadd-workshops">
+						<td colspan="5" class="align-center"><a class='add option-add_{{iftulogin}}'>ثبت کارگاه</a></td>
+					</tr>
+				</tbody>
+			</table>
+
+
+
+
+			<a target="_blank" href="http://fa.gravatar.com/" title="گراواتار خود را تغییر دهید"><img src="{{d_user_grav}}" alt="{{d_users.firstname}} {{d_users.lastname}}" id="profile-avatar"></img></a>
+
+
+
+
+		</div>
+	</div>
+
+	<hr />
+
+	<div class="row">
+		<table class="profile-data" id="users-research_status">
+			<tbody>
+				<tr><th colspan="5" class="align-center fg-black">وضعیت پژوهش های در حال انجام</th></tr>
+				<tr>
+					<th>ردیف</th>
+					<th>عنوان پژوهش</th>
+					<th>توضیح</th>
+					<th>شرکت به عنوان</th>
+					<th>وضعیت</th>
+				</tr>
+				{%for d in d_r_list%}
+				<tr>
+					<td>{{loop.index}}</td>
+					<td><a href="research/{{d.research_id}}">{{d.title}}</a></td>
+					<td>{{d.content}}</td>
+					<td>
+						{%if d.sender_type=='group' %}<a href="group/{{d.group_id}}">مدیر گروه پژوهشی</a>
+						{%elseif d.sender_type=='researcher' %}پژوهشگر
+						{%endif%}
+					</td>
+					<td>
+						{%if d.status     == 'declared'%}تعریف شده و منتظر دریافت طرح های پیشنهادی پژوهشگران
+						{%elseif d.status == 'accept'%}طرح اولیه مورد تایید قرار گرفته است
+						{%elseif d.status == 'phase'%}فازبندی طرح توسط پژوهشگر مشخص شده است.
+						{%elseif d.status == 'contract'%}در مرحله ثبت قرارداد
+						{%elseif d.status == 'study'%}در حال انجام
+						{%elseif d.status == 'ended'%}با موفقیت به اتمام رسیده
+						{%elseif d.status == 'deleted'%}حذف شده
+						{%endif%}
+					</td>
+				</tr>
+				{% else %}
+				<tr><td colspan="5" class="align-center">تاکتون این پژوهشگر فعالت پژوهشی در این سامانه نداشته است</td></tr>
+				{%endfor%}
+			</tbody>
+		</table>
+	</div>
+
+	<div class="row">
+		<table class="profile-data" id="users-researchproposal_status">
+			<tbody>
+				<tr><th colspan="7" class="align-center fg-black">وضعیت پروپوزال های ارسال شده</th></tr>
+				<tr>
+					<th>ردیف</th>
+					<th>توضیح</th>
+					<th>قیمت</th>
+					<th>مدت زمان</th>
+					<th>ارسال به عنوان</th>
+					<th>کد تقاضا</th>
+					<th>وضعیت</th>
+				</tr>
+				{%for d in d_rp_list%}
+				{%if d.status=='accept'%}<tr class="alert-success">
+				{%else%}
+				<tr>
+					{%endif%}
+					<td>{{loop.index}}</td>
+					<td><a target="_blank" href="{{d.file|file_addr}}" title="دانلود پروپوزال ارسالی با عنوان {{d.content}}">{{d.content}}</a></td>
+					<td>{{d.price}}</td>
+					<td style="min-width:50px">{{d.day}}</td>
+					<td style="min-width:80px">
+						{%if d.group_id%}<a href="group/{{d.group_id}}">مدیر گروه پژوهشی</a>
+						{%else%}پژوهشگر
+						{%endif%}
+					</td>
+					<td><a href="research/{{d.research_id}}">{{d.research_id}}</a></td>
+					<td style="min-width:70px">
+						{%if d.status=='check' %}در حال بررسی
+						{%elseif d.status=='accept' %}<a href="research/{{d.research_id}}">تایید شده</a>
+						{%elseif d.status=='reject' %}رد شده
+						{%endif%}
+					</td>
+				</tr>
+				{% else %}
+				<tr><td colspan="5" class="align-center">تاکتون این پژوهشگر فعالت پژوهشی در این سامانه نداشته است</td></tr>
+				{%endfor%}
+			</tbody>
+		</table>
+	</div>
+
+
+
+
+</section>
+
+
+
+
+
+{%if iftulogin%}
+<form method="post" action="profile" id="add-contracts-macro" class="form-macro">
+	<input type="hidden" name="_post" value="contractsedit" class="profile-data">
+	<table>
+		<tbody>
+			<tr><th colspan="4" class="align-center fg-black">مشخصات سازمانهای طرف قرارداد در حوزه پژوهشی</th></tr>
+			<tr>
+				<th>نام سازمان</th>
+				<th>شماره تماس</th>
+				<th>عنوان پژوهش</th>
+			</tr>
+			<tr>
+				<td><label><input name="name"></label></td>
+				<td><label><input name="tel"></label></td>
+				<td><label><input name="title"></label></td>
+			</tr>
+			<tr>
+				<td colspan="5" class="align-center">
+					<input type="submit" class="submit-fadeadd" value="ثبت پتنت">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</form>
+
+<form method="post" action="profile" id="add-seminars-macro" class="form-macro">
+	<input type="hidden" name="_post" value="seminarsedit" class="profile-data">
+	<table>
+		<tbody>
+			<tr><th colspan="5" class="align-center fg-black">عناوین شرکت در سیمنارهای ملی و بین المللی</th></tr>
+			<tr>
+				<th>نام سمینار/همایش</th>
+				<th>عنوان مقاله</th>
+				<th>زمان ارائه</th>
+				<th>صورت اجرای مقاله</th>
+			</tr>
+			<tr>
+				<td><label><input name="name"></label></td>
+				<td><label><input name="title"></label></td>
+				<td><label><input name="date"></label></td>
+				<td><label>
+					<select name="type">
+						<option value="سخنرانی">سخنرانی</option>
+						<option value="پوستر">پوستر</option>
+					</select>
+				</label></td>
+			</tr>
+			<tr>
+				<td colspan="5" class="align-center">
+					<input type="submit" class="submit-fadeadd" value="ثبت سیمنار">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</form>
+
+<form method="post" action="profile" id="add-workshops-macro" class="form-macro">
+	<input type="hidden" name="_post" value="workshopsedit" class="profile-data">
+	<table>
+		<tbody>
+			<tr><th colspan="5" class="align-center fg-black">عناوین و مستندات کارگاههای برگزار کننده</th></tr>
+			<tr>
+				<th>نام کارگاه یا همایش</th>
+				<th>برگزار کننده</th>
+				<th>زمان برگزاری</th>
+				<th>نوع فعالیت</th>
+			</tr>
+			<tr>
+				<td><label><input name="name"></label></td>
+				<td><label><input name="title"></label></td>
+				<td><label><input name="date"></label></td>
+				<td><label>
+					<select name="type">
+						<option value="دبیر">دبیر</option>
+						<option value="رئیس کارگاه">رئیس کارگاه</option>
+						<option value="عضو کمیته علمی">عضو کمیته علمی</option>
+						<option value="عضو کمیته داوری">عضو کمیته داوری</option>
+						<option value="عضو کمیته اجرایی">عضو کمیته اجرایی</option>
+					</select>
+				</label></td>
+			</tr>
+			<tr>
+				<td colspan="5" class="align-center">
+					<input type="submit" class="submit-fadeadd" value="ثبت کارگاه">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</form>
+
+<form method="post" action="profile" id="add-book-macro" class="form-macro">
+	<input type="hidden" name="_post" value="bookedit" class="profile-data">
+	<table>
+		<tbody>
+			<tr><th colspan="5" class="align-center fg-black">عناوین و تعداد کتابهای تالیف، ترجمه و گردآوری شده</th></tr>
+			<tr>
+				<th>عنوان</th>
+				<th>انتشارات</th>
+				<th>سال</th>
+				<th>مسئولیت</th>
+			</tr>
+			<tr>
+				<td><label><input name="title"></label></td>
+				<td><label><input name="publisher"></label></td>
+				<td><label><input name="year"></label></td>
+				<td><label>
+					<select name="type">
+						<option value="نویسنده">نویسنده</option>
+						<option value="گردآورنده">گردآورنده</option>
+						<option value="مترجم">مترجم</option>
+					</select>
+				</label>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="5" class="align-center">
+				<input type="submit" class="submit-fadeadd" value="ثبت کتاب">
+			</td>
+		</tr>
+	</tbody>
+</table>
+</form>
+
+<form method="post" action="profile" id="add-patent-macro" class="form-macro">
+	<input type="hidden" name="_post" value="patentedit" class="profile-data">
+	<table>
+		<tbody>
+			<tr>
+				<th>عنوان اختراع</th>
+				<th>مکان ثبت</th>
+				<th>شماره ثبت</th>
+				<th>تاریخ ثبت</th>
+			</tr>
+			<tr>
+				<td><label><input name='title'></label></td>
+				<td><label><input name='country'></label></td>
+				<td><label><input name='code'></label></td>
+				<td><label><input name='date'></label></td>
+			</tr>
+			<tr>
+				<td colspan="5" class="align-center">
+					<input type="submit" class="submit-fadeadd" value="ثبت پتنت">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</form>
+
+<form action="profile" id="add-users-upload" class="form-macro" method="post"
+enctype="multipart/form-data">
+<input type="hidden" name="_post" value="uploadedit" class="profile-data">
+<table>
+	<tbody>
+		<tr>
+			<th>عنوان</th>
+			<th>انتخاب فایل</th>
+			<th>توضیح</th>
+		</tr>
+		<tr>
+			<td><label><select name="title">
+				<option value="کارت ملی">کارت ملی</option>
+				<option value="شناسنامه">شناسنامه</option>
+				<option value="مدرک تحصیلی">مدرک تحصیلی</option>
+				<option value="گواهی عضو هیئت علمی">گواهی عضو هیئت علمی</option>
+			</select></label></td>
+			<td><label><input type="file" name='fileupd' style="width:100px"></label></td>
+			<td><label><input name='description'></label></td>
+		</tr>
+		<tr>
+			<td colspan="5" class="align-center">
+				<input type="submit" class="submit-fadeadd" value="آپلود فایل">
+			</td>
+		</tr>
+	</tbody>
+</table>
+</form>
+{%endif%}
+
+
+
+
+
+
+{%endblock%}
+
+{%block before_content%}{%endblock%}
+{%block after_content%}{%endblock%}

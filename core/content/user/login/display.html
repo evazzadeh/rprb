@@ -1,0 +1,25 @@
+{%extends "display.html"%}
+
+{%block content%}
+<div class="row">
+	{%if u_login%}
+	<section>
+		<p class="alert alert-block alert-error">شما با اکانت خود وارد سامانه شده اید! برای ورود مجدد باید از سامانه <a href="logout" title="خروج از سامانه">خارج شوید!</a></p>
+	</section>
+	{%else%}
+	<section>
+		<p class="alert alert-block alert-info">برای ورود به سامانه نام کاربری و رمز عبور خود را در فرم زیر وارد کنید. این اولین مراجعه شماست؟ <a href="register">ثبت نام کنید.</a></p>
+		<div class="row">
+			<div class="span7"></div>
+			<div class="span5">
+				{% include 'macro/login.html' %}
+				<a href="forgotten" title="Recovery your account">بازیابی کلمه عبور</a>
+			</div>
+		</div>
+	</section>
+	{%endif%}
+</div>
+{%endblock%}
+
+{%block before_content%}{%endblock%}
+{%block after_content%}{%endblock%}

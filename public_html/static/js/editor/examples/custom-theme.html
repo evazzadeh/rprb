@@ -1,0 +1,36 @@
+<!doctype html>
+<html dir="rtl">
+	<head>
+		<meta charset="utf-8" />
+		<title>Custom Theme Examples</title>
+		<style>
+			body {
+				font-family:tahoma;font-size:12px;
+			}
+			form {
+				margin: 0;
+			}
+			textarea {
+				display: block;
+			}
+		</style>
+		<script charset="utf-8" src="../kindeditor-min.js"></script>
+		<script charset="utf-8" src="../lang/fa.js"></script>
+		<script>
+			KindEditor.ready(function(K) {
+				K.create('#content1', {
+					themeType : 'default'
+				});
+				K.create('#content2', {
+					themeType : 'simple'
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<h3>پوسته پیشفرض</h3>
+		<textarea id="content1" name="content" style="width:700px;height:200px;visibility:hidden;"></textarea>
+		<h3>پوسته دلخواه</h3>
+		<textarea id="content2" name="content" style="width:700px;height:200px;visibility:hidden;"></textarea>
+	</body>
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html dir="rtl">
+	<head>
+		<meta charset="utf-8" />
+		<title>Readonly Examples</title>
+		<style>
+			body{
+				font-family:tahoma;
+				font-size:12px;
+			}
+			form {
+				margin: 0;
+			}
+			textarea {
+				display: block;
+			}
+		</style>
+		<script charset="utf-8" src="../kindeditor-min.js"></script>
+		<script charset="utf-8" src="../lang/fa.js"></script>
+		<script>
+			KindEditor.ready(function(K) {
+				var editor = K.create('textarea[name="content"]', {
+					readonlyMode : true
+				});
+				// Enable ReadOnly Mode
+				K('input[name=readonly]').click(function() {
+					editor.readonly();
+				});
+				// Cancel Read Only Mode
+				K('input[name=cancel]').click(function() {
+					editor.readonly(false);
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<h3>ویرایشگر فقط خواندنی</h3>
+		<form>
+			<textarea name="content" style="width:800px;height:200px;"></textarea>
+			<p>
+				<input type="button" name="readonly" value="حالت فقط خواندنی" />
+				<input type="button" name="cancel" value="انصراف از حالت خواندنی" />
+			</p>
+		</form>
+	</body>
+</html>

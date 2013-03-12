@@ -1,0 +1,18 @@
+{%extends "admin/home/display.html"%}
+
+{%block admin_content%}
+
+<h1>
+	{%if mode=='add'%}افزودن
+	{%elseif mode=='edit'%}ویرایش
+	{%elseif mode=='delete'%}حذف
+	{%endif%}
+
+	{%if type=='post'%}اخبار
+	{%elseif type=='page'%}برگه‌ها
+	{%endif%}
+</h1>
+
+{% import "./macro/form.html" as forms %}
+<form method="post" id="postedit" class="ajx">{{forms.make(form)}}</form>
+{%endblock%}

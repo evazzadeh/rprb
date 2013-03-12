@@ -1,0 +1,42 @@
+{%extends "admin/home/display.html"%}
+
+
+{%block admin_content%}
+
+<h1>کاربران</h1>
+
+<table class="full-width">
+	<tr>
+		<th>ردیف</th>
+		<th>نام</th>
+		<th>نام خانوادگی</th>
+		<th>نام کاربری</th>
+		<th>نوع</th>
+		<th>تلفن</th>
+		<th>وب سایت</th>
+		<th>وضعیت</th>
+	</tr>
+	{%for d in m_users_all%}
+	<tr>
+		<td>{{loop.index}}</td>
+		<td>{{d.firstname}}</td>
+		<td>{{d.lastname}}</td>
+		<td class="align-left">{{d.username}}</td>
+		<td>
+			{%if d.type=='researcher'%}پژوهشگر
+			{%elseif d.type=='company'%}شرکت
+			{%endif%}
+		</td>
+		<td>{{d.tel}}</td>
+		<td class="align-left"><a href="http://{{d.website}}" target="_blank">{{d.website}}</a></td>
+		<td>
+
+			<span cls-value="{{d.user_id}}" cls-name="active">{%if d.status=='active'%}فعال{%else%}<a href="admin/user/active={{d.user_id}}" class="a-ajx">فعال</a>{%endif%}</span> |
+			<span cls-value="{{d.user_id}}" cls-name="awaiting">{%if d.status=='awaiting'%}در انتظار تایید{%else%}<a href="admin/user/awaiting={{d.user_id}}" class="a-ajx">در انتظار تایید</a>{%endif%}</span> |
+			<span cls-value="{{d.user_id}}" cls-name="deactive">{%if d.status=='deactive'%}غیرفعال{%else%}<a href="admin/user/deactive={{d.user_id}}" class="a-ajx">غیرفعال</a>{%endif%}</span> |
+			<span cls-value="{{d.user_id}}" cls-name="removed">{%if d.status=='removed'%}حذف شده{%else%}<a href="admin/user/removed={{d.user_id}}" class="a-ajx">حذف</a>{%endif%}</span>
+		</td>
+	</tr>
+	{%endfor%}
+</table>
+{%endblock%}

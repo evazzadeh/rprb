@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Dialog Examples</title>
+		<link rel="stylesheet" href="../themes/default/default.css" />
+		<script src="../kindeditor.js"></script>
+		<script>
+			KindEditor.ready(function(K) {
+				K('#create1').click(function() {
+					var dialog = K.dialog({
+						width : 500,
+						title : 'پنجرک نمونه',
+						body : '<div style="margin:10px;"><strong>محتوا</strong></div>',
+						closeBtn : {
+							name : 'بستن',
+							click : function(e) {
+								dialog.remove();
+							}
+						},
+						yesBtn : {
+							name : 'بله',
+							click : function(e) {
+								alert(this.value);
+							}
+						},
+						noBtn : {
+							name : 'خیر',
+							click : function(e) {
+								dialog.remove();
+							}
+						}
+					});
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<input type="button" id="create1" value="نمایش پنجرک" />
+	</body>
+</html>

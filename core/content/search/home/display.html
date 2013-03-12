@@ -1,0 +1,40 @@
+{%extends "display.html"%}
+{%block content%}
+<form action="search" method="get" class="formsearch">
+	<input type="text" name="q" id="search_box" class="searchinput" placeholder="جستجو" value="{{searchx}}"/>
+	<span class="configsearch">
+		<label><input type="radio" name="op" value="researcher"{%if search_type == "researcher"%} checked="checked"{%endif%}>پژوهشگران</label>
+		<label><input type="radio" name="op" value="group"{%if search_type == "group"%} checked="checked"{%endif%}>گروه ها</label>
+		<label><input type="radio" name="op" value="research"{%if search_type == "research"%} checked="checked"{%endif%}>تقاضاها</label>
+	</span>
+	<input type="submit" value="بگرد" class="searchsubmit">
+</form>
+{%if search_type == 'researcher'%}
+{%for q in search%}
+<aside>
+	<b><a href="profile/{{q.user_id}}" target="_blank">{{q.fisrtname}} {{q.lastname}}</a></b>
+	{{q.education|raw}} - {{q.field|raw}} - {{q.adjusted|raw}}
+</aside>
+{%endfor%}
+{%elseif search_type == 'research'%}
+{%for q in search%}
+<aside>
+	<b><a href="research/{{q.research_id}}" target="_blank">{{q.title|raw}}</a></b>
+	<p>{{q.content|raw}}</p>
+</aside>
+{%endfor%}
+{%endif%}
+{%if page.tpage != 1%}
+<a href="search/{{page.url}}/page=1">«</a>
+{%endif%}
+{%for p in 1..page.all%}
+{%if p == page.tpage%}
+{{p}}
+{%else%}
+<a href="search/{{page.url}}/page={{p}}">{{p}}</a>
+{%endif%}
+{%endfor%}
+{%if page.tpage != page.all%}
+<a href="search/{{page.url}}/page={{page.all}}">»</a>
+{%endif%}
+{%endblock%}

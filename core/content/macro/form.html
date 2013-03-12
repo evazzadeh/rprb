@@ -1,0 +1,93 @@
+{% macro radio(array) %}
+	{% spaceless %}
+		<label for="{{array.attr.id}}">{{array.label}}</label>
+		{% for child in array.childs%}
+			<input type="radio" name="{{array.attr.name}}" {% for attr,value in child.attr%}{{attr}}="{{value}}" {% endfor %}>
+			<label for="{{child.attr.id}}" class="input-free">{{child.label}}</label>
+		{% endfor %}
+		{% endspaceless %}
+{% endmacro %}
+
+{% macro checkbox(array) %}
+	{% spaceless %}
+		<label for="{{array.attr.id}}">{{array.label}}</label>
+		{% for child in array.childs%}
+			<input type="checkbox" name="{{array.attr.name}}" {% for attr,value in child.attr%}{{attr}}="{{value}}" {% endfor %}>
+			<label for="{{child.attr.id}}" class="input-free">{{child.label}}</label>
+		{% endfor %}
+		{% endspaceless %}
+{% endmacro %}
+
+{% macro select(array) %}
+	{% spaceless %}
+		<label for="{{array.attr.id}}">{{array.label}}</label>
+		<select name="{{array.attr.name}}" id="{{array.attr.name}}">
+		<option value="" disabled="disabled" selected="selected">لطفا یکی از این موارد را انتخاب کنید</option>
+		{% for child in array.childs%}
+			<option {% for attr,value in child.attr%}{{attr}}="{{value}}" {% endfor %}>{{child.label}}</option>
+		{% endfor %}
+		</select>
+		{% endspaceless %}
+{% endmacro %}
+
+
+{% macro textarea(array) %}
+	{% spaceless %}
+			<label for="{{array.attr.id}}">{{array.label}}</label>
+			<textarea type="{{array.type}}" {% for attr,value in array.attr%}{%if attr != 'value'%}{{attr}}="{{value}}"}{%endif%} {% endfor %}>{{array.attr.value}}</textarea>
+	{% endspaceless %}
+{% endmacro %}
+
+
+{% macro input(array) %}
+	{% spaceless %}
+		{% if array.type == 'robot' %}
+			<label for="{{array.attr.id}}">{{array.label}}</label>
+			<input type="text" {% for attr,value in array.attr%}{{attr}}="{{value}}" {% endfor %}>
+		{% else %}
+			<label for="{{array.attr.id}}">{{array.label}}</label>
+			<input type="{{array.type}}" {% for attr,value in array.attr%}{{attr}}="{{value}}" {% endfor %}>
+		{% endif %}
+	{% endspaceless %}
+{% endmacro %}
+
+
+
+
+
+{% macro make(array) %}
+	{% import _self as form%}
+	<ul>
+		{% for input in array%}
+			{% if input.type == 'hidden' %}
+				<input type="{{input.type}}" {% for attr,value in input.attr%}{{attr}}="{{value}}" {% endfor %}>
+			{% else %}
+				{% if input.type == 'robot' %}
+					<li class="adam">
+						{{ form.input(input)}}
+					</li>				
+				{%else%}
+					<li>
+							{% if input.type == 'radio'%}
+								{{ form.radio(input)}}
+
+							{% elseif input.type == 'checkbox'%}
+								{{ form.checkbox(input)}}
+
+							{% elseif input.type == 'select'%}
+								{{ form.select(input)}}
+
+							{% elseif input.type == 'textarea'%}
+								{{ form.textarea(input)}}
+
+							{% else %}
+								{{ form.input(input)}}
+								
+							{% endif %}
+
+					</li>
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+	</ul>
+{% endmacro %}

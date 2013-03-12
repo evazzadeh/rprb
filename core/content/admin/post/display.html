@@ -1,0 +1,35 @@
+{%extends "admin/home/display.html"%}
+
+
+{%block admin_content%}
+
+{%if type=='post'%}
+<h1>اخبار</h1>
+{%elseif type=='page'%}
+<h1>برگه ها</h1>
+{%endif%}
+<table class="full-width">
+	<tr>
+		<th>ردیف</th>
+		<th>عنوان</th>
+		<th>وضعیت</th>
+		<th>تاریخ انتشار</th>
+		<th>کد</th>
+		<th>آدرس</th>
+	</tr>
+	{%for d in m_posts%}
+	<tr>
+		<td>{{loop.index}}</td>
+		<td><a href="admin/{{xtype}}/edit/{{d.post_id}}">{{d.title}}</a></td>
+		<td>
+			{%if d.status=='publish'%}منتشر شده
+			{%elseif d.status=='draft'%}پیش نویس
+			{%endif%}
+		</td>
+		<td>{{d.publish_date|jdate}}</td>
+		<td>{{d.post_id}}</td>
+		<td  class="align-left"><a href="{{d.slug_cat}}/{{d.slug}}" target="_blank">نمایش</a></td>
+	</tr>
+	{%endfor%}
+</table>
+{%endblock%}

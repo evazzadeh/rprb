@@ -1,0 +1,15 @@
+{%extends "admin/home/display.html"%}
+
+
+{%block admin_content%}
+
+{%if type=='tag'%}
+<h1>کلیدواژه ها</h1>
+{%elseif type=='category'%}
+<h1>دسته ها</h1>
+{%endif%}
+{% import "./macro/form.html" as forms %}
+<form method="post" id="termedit" class="ajx">
+	{{forms.make(form)}}
+</form>
+{%endblock%}

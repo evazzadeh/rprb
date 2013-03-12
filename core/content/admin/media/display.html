@@ -1,0 +1,30 @@
+{%extends "admin/home/display.html"%}
+
+
+{%block admin_content%}
+
+<h1>کتابخانه</h1>
+
+<table class="full-width">
+	<tr>
+		<th>ردیف</th>
+		<th>نام</th>
+		<th>نوع</th>
+		<th>اندازه</th>
+		<th>توضیح</th>
+		<th>تاریخ</th>
+		<th>نمایش</th>
+	</tr>
+	{%for d in m_users%}
+	<tr>
+		<td>{{loop.index}}</td>
+		<td>{{d.title}}</td>
+		<td class="align-left">{{d.type}}</td>
+		<td class="align-left">{{d.size}} کیلوبایت</td>
+		<td>{{d.description}}</td>
+		<td>{{d.time|jdate}}</td>
+		<td><a href="{{d.addr_id}}/{{d.filename}}.{{d.type}}">نمایش</a></td>
+	</tr>
+	{%endfor%}
+</table>
+{%endblock%}

@@ -1,0 +1,257 @@
+{%extends "display.html"%}
+
+{%block content%}
+
+{%if d_research.0.status == 'deleted' %}
+<section>
+	<p class="alert alert-block alert-danger">این تقاضا حذف شده است!</p>
+</section>
+{%else%}
+<article>
+
+	<div class="row">
+		<div class="span5">
+
+			<div class="box cursor-help">
+				<div class="box-head fg-white">جزئیات تقاضا</div>
+				<div class="box1-inner">
+					<ul class="list">
+						<li>{{d_research.0.title}}</li>
+						<li>{{d_research.0.content}}</li>
+						<li>تاکنون {{d_proposal_list_group | length}} پروپوزال ارائه شده است</li>
+
+						<li>وضعیت تقاضا: 
+							{%if d_research.0.status     == 'declared'%}تعریف شده و منتظر دریافت طرح های پیشنهادی پژوهشگران
+							{%elseif d_research.0.status == 'accept'%}طرح اولیه مورد تایید قرار گرفته است
+							{%elseif d_research.0.status == 'phase'%}فازبندی طرح توسط پژوهشگر مشخص شده است.
+							{%elseif d_research.0.status == 'contract'%}در مرحله ثبت قرارداد
+							{%elseif d_research.0.status == 'study'%}در حال انجام
+							{%elseif d_research.0.status == 'ended'%}با موفقیت به اتمام رسیده
+							{%elseif d_research.0.status == 'deleted'%}حذف شده
+							{%endif%}
+						</li>
+
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="span7">
+		</div>
+	</div>
+
+	{%if u_login%}
+	<section>
+
+		{%if u_status == 'active'%}
+
+
+		{%if u_type=='researcher'%}
+		<section>
+
+			{%if d_research.0.status == 'declared' %}
+			<section>
+				<p class="alert alert-block alert-info">جناب {{u_lastname}} پژوهشگر محترم، شما می توانید برای این تقاضا پروپوزال خود را ارائه نمایید. بدین منظور از فرم زیر استفاده کنید.</p>
+				{% import "./macro/form.html" as forms %}
+				<form method="post" id="proposaladd" class="ajx" enctype="multipart/form-data">{{forms.make(form1)}}</form>
+			</section>
+
+			{%elseif d_research.0.status == 'deleted' %}
+			<p class="alert alert-block alert-info">این تقاضا حذف شده است!</p>
+			{%endif%}
+
+
+			{%if d_research.0.sender_id == u_id%}
+			<article>
+				{%if d_research.0.status == 'accept'%}
+				<p class="alert alert-block alert-success">پروپوزال ارسالی شما مورد تایید کارفرما قرار گرفت. لطفا فازبندی خود را برای اجرای طرح ارائه نمایید.</p>
+
+				{%elseif d_research.0.status == 'phase'%}
+				<p class="alert alert-block alert-success">شما فاز بندی خود را برای کارفرما ارسال نموده اید. منتظر دریافت پاسخ و ارسال قرارداد باشید.</p>
+
+
+				{%elseif d_research.0.status == 'contract'%}
+				<section>
+					<p class="alert alert-block alert-success">همه جیز آماده امضای قرارداد است. کارفرما موافقیت خود را با طرح و مبلغ پیشنهادی شما اعلام کرده است. با امضای قرارداد در فرم زیر تعهد شما آغاز شده و می توانید پژوهش خود را شروع کنید.</p>
+					{{contract_text}}
+					{% import "./macro/form.html" as forms %}
+					<form method="post" id="contractaccept" class="ajx">{{forms.make(form2)}}</form>
+				</section>
+
+				{%elseif d_research.0.status == 'study'%}
+				<section>
+					<p class="alert alert-block alert-success">شما قرارداد را امضا کرده اید. پژوهش جطور پیش میرود؟ در صورتی که پژوهش به اتمام رسیده است از طریق فرم زیر آن را برای کارفرما ارسال کنید</p>
+					{% import "./macro/form.html" as forms %}
+					<form method="post" id="reseaechsend" class="ajx">{{forms.make(form3)}}</form>
+				</section>
+
+				{%elseif d_research.0.status == 'ended'%}
+				<p class="alert alert-block alert-good">شما این تقاضای پژوهشی را با موفقیت به اتمام رساندید. تبریک می گوییم.</p>
+
+
+				{%endif%}
+			</article>
+			{%endif%}
+
+		</section>
+
+
+		{%elseif u_type=='company'%}
+		<section>
+
+			{%if d_research.0.company_id == u_id %}
+			<article>
+				{%if d_research.0.status == 'declared'%}
+
+				{%if proposal_accept%}
+				<p class="alert alert-block alert-good">پروپوزال مورد نظر شما با موفقیت تایید شد.</p>
+				{%else%}
+				<p class="alert alert-block alert-info">تقاضا توسط شما مطرح شده است. منتظر دریافت طرح های پژوهشگران باشید.</p>
+				{%endif%}
+
+				{%elseif d_research.0.status == 'accept'%}
+				<p class="alert alert-block alert-info">شما یک پروپوزال را انتخاب کرده اید. منتظر اعلام فازبندی طرح توسط پژوهشگر انتخابی باشید</p>
+
+				{%elseif d_research.0.status == 'phase'%}
+				<p class="alert alert-block alert-good">فازبندی پروژه توسط پژوهشگر مشخص شده است. حالا می توانید قرارداد را برای پژوهشگر ارسال کنید</p>
+
+				{%elseif d_research.0.status == 'contract'%}
+				<p class="alert alert-block alert-success">شما قرارداد را برای پژوهشگر ارسال نموده اید. منتظر امضای آن از طرف پژوهشگر باشید.</p>
+
+				{%elseif d_research.0.status == 'study'%}
+				<p class="alert alert-block alert-info">قرارداد ثبت شده و پژوهشگر در حال انجام پژوهش بر روی نیاز شماست. شکیبا باشید.</p>
+
+				{%elseif d_research.0.status == 'ended'%}
+				<p class="alert alert-block alert-good">تقاضای شما برای این پژوهش با موفقیت برطرف شده و پژوهشگر طرح نهایی را به شما تحویل داده است.</p>
+
+				{%endif%}
+			</article>
+
+
+			<article>
+
+				<h2>پروپوزال های دریافتی</h2>
+				<hr />
+				<p>در این بخش شما پروپوزال های دریافتی از پژوهشگران را مشاهده می کنید. سطر مربوط به طرح مورد تایید شما و نهایی به رنگ سبز نمایش داده است</p>
+				<table class="profile-data" id="proposal-data">
+					<tbody>
+						<tr>
+							<th>ردیف</th>
+							<th>ارسال توسط</th>
+							<th>نام</th>
+							<th>توضیح</th>
+							<th>فایل پروپوزال</th>
+							<th>تاریخ ارسال</th>
+							<th>قیمت</th>
+							<th>وضعیت</th>
+							{%if d_research.0.status == 'declared' %}
+							<th>انتخاب</th>
+							{%endif%}
+
+						</tr>
+						<section>
+							{%for d in d_proposal_list_group%}
+							{%if d.status=='accept'%}<tr class="alert-success">
+							{%else%}
+							<tr>
+								{%endif%}
+
+								<td>{{loop.index}}</td>
+								<td>گروه</td>
+								<td>
+									<a href="group/{{d.group_id}}" title="مشاهده پروفایل {{d.title}}: {{d.content}}">{{d.title}}</a>
+								</td>
+								<td>{{d.r_content}}</td>
+								
+								<td><a target="_blank" href="{{d.file|file_addr}}" title="دانلود پروپوزال ارسالی با عنوان {{d.title}}">دانلود</a></td>
+								<td>{{d.date|jdate}}</td>
+								<td>{{d.price}}</td>
+								<td>
+									{%if d.status=='check'%}مشخص نشده
+									{%elseif d.status=='accept'%}تایید پروپوزال
+									{%elseif d.status=='reject'%}رد شده
+									{%endif%}
+								</td>
+
+								{%if d_research.0.status == 'declared' %}
+								<td>
+									<a href="research/{{d.research_id}}/{{d.proposal_id}}" class="roller">
+										<span data-title="انتخاب">انتخاب</span>
+									</a>
+								</td>
+								{%endif%}
+
+							</tr>
+							{% else %}
+							<tr><td colspan="8" class="align-center">تاکتون هیچ طرحی توسط گروه های پژوهشی ارسال نشده است! شکیبا باشید.</td></tr>
+							{%endfor%}
+
+							{%for d in d_proposal_list_researcher%}
+							{%if d.r_status=='accept'%}<tr class="alert-success">
+							{%else%}
+							<tr>
+								{%endif%}
+
+								<td>{{d_proposal_list_group|length + loop.index}}</td>
+								<td>شخص</td>
+								<td>
+									<a href="group/{{d.group_id}}" title="مشاهده پروفایل {{d.firstname}} {{d.lastname}}">{{d.firstname}} {{d.lastname}}</a>
+								</td>
+								<td>{{d.r_content}}</td>
+								<td><a target="_blank" href="{{d.file|file_addr}}" title="دانلود پروپوزال ارسالی با عنوان {{d.title}}">دانلود</a></td>
+								<td>{{d.date|jdate}}</td>
+								<td>{{d.price}}</td>
+								<td>
+									{%if d.r_status=='check'%}مشخص نشده
+									{%elseif d.r_status=='accept'%}تایید پروپوزال
+									{%elseif d.r_status=='reject'%}رد شده
+									{%endif%}
+								</td>
+
+								{%if d_research.0.status == 'declared' %}
+								<td>
+									<a href="research/{{d.research_id}}/{{d.proposal_id}}" class="roller">
+										<span data-title="انتخاب">انتخاب</span>
+									</a>
+								</td>
+								{%endif%}
+
+							</tr>
+							{% else %}
+							<tr><td colspan="8" class="align-center">تاکتون هیچ طرحی توسط پژوهشگران ارسال نشده است! شکیبا باشید.</td></tr>
+							{%endfor%}
+
+						</section>
+
+					</tbody>
+				</table>
+
+				{%if d_research.0.status == 'ended' %}
+				<h2>طرح تکمیل شده</h2>
+				<hr />
+				<p>در حال حاضر پژوهش به طور کامل انجام شده است.</p>
+				{%endif%}
+			</article>
+			{%endif%}
+		</section>
+		{%endif%}
+
+
+
+		{%else%}
+		<p class="alert alert-block alert-danger">اکانت شما فعال نیست! با مدیریت سایت تماس بگیرید.</p>
+		{%endif%}
+
+	</section>
+	{%else%}
+	<p class="alert alert-block alert-danger">برای دسترسی به اطلاعات بیشتر وارد سامانه شوید</p>
+	{%endif%}
+
+</article>
+
+
+{%endif%}
+
+{%endblock%}
+{%block before_content%}{%endblock%}
+{%block after_content%}{%endblock%}

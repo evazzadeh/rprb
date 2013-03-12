@@ -1,0 +1,10 @@
+{%extends "display.html"%}
+
+{%block content%}
+	<span class="publish_date en">{{page_publish_date|jdate}}</span><br />
+	{{page_content|raw}}
+
+{%endblock%}
+
+{%block before_content%}{%endblock%}
+{%block after_content%}{%endblock%}

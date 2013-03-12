@@ -1,0 +1,12 @@
+{%extends "display.html"%}
+
+{%block content%}
+<section>
+	<p class="alert alert-block alert-info">شما به راحتی می توانید یک گروه پژوهشی تشکیل داده و با سایر پژوهشگران قدرت خود را چند برابر کنید.</p>
+	{% import "./macro/form.html" as forms %}
+	<form method="post" id="groupcreate" class="ajx">{{forms.make(form)}}</form>
+</section>
+{%endblock%}
+
+{%block before_content%}{%endblock%}
+{%block after_content%}{%endblock%}

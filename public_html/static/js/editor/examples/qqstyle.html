@@ -1,0 +1,79 @@
+<!doctype html>
+<html dir="rtl">
+	<head>
+		<meta charset="utf-8" />
+		<title>Custom Theme Examples</title>
+		<style>
+			body {font-family:tahoma;font-size:12px;}
+			form {
+				margin: 0;
+			}
+			textarea {
+				display: block;
+			}
+		</style>
+		<script charset="utf-8" src="../kindeditor-min.js"></script>
+		<script charset="utf-8" src="../lang/fa.js"></script>
+		<script>
+			KindEditor.ready(function(K) {
+				K.each({ 
+					'plug-align' : {
+						name : 'تراز',
+						method : {
+							'justifyleft' : 'چپ',
+							'justifycenter' : 'وسط',
+							'justifyright' : 'راست'
+						}
+					},
+					'plug-order' : {
+						name : 'فهرست',
+						method : {
+							'insertorderedlist' : 'مرتب',
+							'insertunorderedlist' : 'نامرتب'
+						}
+					},
+					'plug-indent' : {
+						name : 'تورفتگی',
+						method : {
+							'indent' : 'افزایش',
+							'outdent' : 'کاهش'
+						}
+					}
+				},function( pluginName, pluginData ){
+					var lang = {};
+					lang[pluginName] = pluginData.name;
+					KindEditor.lang( lang );
+					KindEditor.plugin( pluginName, function(K) {
+						var self = this;
+						self.clickToolbar( pluginName, function() {
+							var menu = self.createMenu({
+									name : pluginName,
+									width : pluginData.width || 100
+								});
+							K.each( pluginData.method, function( i, v ){
+								menu.addItem({
+									title : v,
+									checked : false,
+									iconClass : pluginName+'-'+i,
+									click : function() {
+										self.exec(i).hideMenu();
+									}
+								});
+							})
+						});
+					});
+				});
+				K.create('#contentqq', {
+					themeType : 'qq',
+					items : [
+						'bold','italic','underline','fontname','fontsize','forecolor','hilitecolor','plug-align','plug-order','plug-indent','link'
+					]
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<h3>پوسته QQ</h3>
+		<textarea id="contentqq" name="content" style="width:700px;height:200px;visibility:hidden;"></textarea>
+	</body>
+</html>

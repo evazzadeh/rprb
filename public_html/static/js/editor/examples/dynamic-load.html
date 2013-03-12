@@ -1,0 +1,44 @@
+<!doctype html>
+<html dir="rtl">
+	<head>
+		<meta charset="utf-8" />
+		<title>Dynamic Load Examples</title>
+		<style>
+			body {font-family:tahoma;font-size:12px;}
+			form {
+				margin: 0;
+			}
+			textarea {
+				display: block;
+			}
+		</style>
+		<script charset="utf-8" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+		<script>
+			$(function() {
+				var editor;
+				$('input[name=load]').click(function() {
+					$.getScript('../kindeditor-min.js', function() {
+						KindEditor.basePath = '../';
+						editor = KindEditor.create('textarea[name="content"]');
+					});
+				});
+				$('input[name=remove]').click(function() {
+					if (editor) {
+						editor.remove();
+						editor = null;
+					}
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<h3>بارگذاری پویا</h3>
+		<form>
+			<textarea name="content" style="width:800px;height:200px;"></textarea>
+			<p>
+				<input type="button" name="load" value="بارگذاری جاوا اسکریپت و نمایش ویرایشگر" />
+				<input type="button" name="remove" value="حذف ویرایشگر" />
+			</p>
+		</form>
+	</body>
+</html>

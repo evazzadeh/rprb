@@ -1,0 +1,41 @@
+<!doctype html>
+<html dir="rtl">
+	<head>
+		<meta charset="utf-8" />
+		<title>Word Count Examples</title>
+		<style>
+			body {
+				font-family:tahoma;
+				font-size:12px;
+			}
+			form {
+				margin: 0;
+			}
+			textarea {
+				display: block;
+			}
+		</style>
+		<script charset="utf-8" src="../kindeditor-min.js"></script>
+		<script charset="utf-8" src="../lang/fa.js"></script>
+		<script>
+			KindEditor.ready(function(K) {
+				K.create('textarea[name="content"]', {
+					afterChange : function() {
+						K('.word_count1').html(this.count());
+						K('.word_count2').html(this.count('text'));
+					}
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<h3>گرفتن تعداد نویسه ها</h3>
+		<form>
+			<textarea name="content" style="width:800px;height:200px;"></textarea>
+			<p>
+				برای محتوای فعلی <span class="word_count1">0</span> نویسه شمارش شده است. (تمامی محتوا و برچسب های HTML)<br />
+				برای محتوای فعلی <span class="word_count2">0</span> نویسه شمارش شده است. (فقط نوشته ، بدون برچسب های HTML)
+			</p>
+		</form>
+	</body>
+</html>

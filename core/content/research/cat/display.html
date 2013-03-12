@@ -1,0 +1,33 @@
+{%extends "display.html"%}
+
+{%block content%}
+
+<a href="research/" >بازگشت</a>
+<table class="profile-data" id="groups">
+	<tbody>
+		<tr><th colspan="4" class="align-center fg-black">تقاضاهای پژوهشی موجود در دسته {{d_activity_detail.activity_title}}</th></tr>
+		<tr>
+			<th>ردیف</th>
+			<th>عنوان</th>
+			<th>توضیح</th>
+			<th>زمینه فعالیت</th>
+		</tr>
+		{%for d in d_research_list%}
+		<tr>
+			<td>{{loop.index}}</td>
+			<td><a href="research/{{d.research_id}}">{{d.title}}</a></td>
+			<td>{{d.content}}</td>
+			<td><a href="research/{{d.slug}}">{{d.activity_title}}</a></td>
+			
+		</tr>
+		{% else %}
+		<tr><td colspan="5" class="align-center">تاکتون تقاضایی در این دسته ثبت نشده است!</td></tr>
+		{%endfor%}
+
+	</tbody>
+</table>
+
+{%endblock%}
+
+{%block before_content%}{%endblock%}
+{%block after_content%}{%endblock%}

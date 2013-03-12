@@ -1,0 +1,31 @@
+{%extends "display.html"%}
+
+{%block content%}
+<p class="alert alert-block alert-info">شما در حال مشاهده پژوهشگران ثبت نام کرده در سیستم هستید</p>
+
+
+<div class="row">
+	<div class="span7"></div>
+
+
+
+			<div class="span4">
+				<div class="box">
+					<div class="box-head2 fg-white"><a href="researchers/" class="none" title="آخرین پژوهشگران">آخرین پژوهشگران</a></div>
+					<div class="box1-inner">
+						<ul class="list">
+							{%for d in lastresearcher%}
+							<li>
+								<a href="profile/{{d.user_id}}">{{d.firstname}} {{d.lastname}}</a>
+							</li>
+							{%endfor%}
+						</ul>
+					</div>
+				</div>
+			</div>
+
+</div>
+{%endblock%}
+
+{%block before_content%}{%endblock%}
+{%block after_content%}{%endblock%}

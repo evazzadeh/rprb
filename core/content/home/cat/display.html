@@ -1,0 +1,31 @@
+{%extends "display.html"%}
+
+{%block content%}
+
+
+<table class="profile-data" id="lastnews">
+	<tbody>
+		<tr><th colspan="3" class="align-center fg-black">آرشیو اخبار</th></tr>
+		<tr>
+			<th>ردیف</th>
+			<th>عنوان</th>
+			<th>زمان انتشار</th>
+		</tr>
+		{%for d in lastnews%}
+		<tr>
+			<td>{{loop.index}}</td>
+			<td><a href="{{d.slug_cat}}/{{d.slug}}/">{{d.title}}</a></td>
+			<td class="align-left">{{d.publish_date |jdate}}</td>
+			
+		</tr>
+		{% else %}
+		<tr><td colspan="3" class="align-center">تاکتون خبری در این دسته منتشر نشده است!</td></tr>
+		{%endfor%}
+
+	</tbody>
+</table>
+
+{%endblock%}
+
+{%block before_content%}{%endblock%}
+{%block after_content%}{%endblock%}

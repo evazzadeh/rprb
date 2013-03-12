@@ -1,0 +1,57 @@
+{%extends "display.html"%}
+
+{%block content%}
+
+
+
+<p class="alert alert-block alert-info">تعدادی از آخرین تقاضایهای ثبت شده برای پژوهش را در لیست زیر مشاهده می کنید. <a href="research/add">شما هم تقاضای پژوهشی خود را ثبت کنید.</a></p>
+
+
+
+<table class="profile-data" id="groups">
+	<tbody>
+		<tr><th colspan="5" class="align-center fg-black">تقاضاهای پژوهشی موجود</th></tr>
+		<tr>
+			<th>ردیف</th>
+			<th>عنوان</th>
+			<th>توضیح</th>
+			<th>زمینه فعالیت</th>
+			<th>وضعیت پژوهش</th>
+		</tr>
+		{%for d in d_research_list%}
+		<tr>
+			<td>{{loop.index}}</td>
+			<td style="min-width:150px"><a href="research/{{d.research_id}}">{{d.title}}</a></td>
+			<td>{{d.content}}</td>
+			<td style="min-width:80px"><a href="research/{{d.slug}}">{{d.activity_title}}</a></td>
+			<td style="min-width:100px">
+				{%if d.status     == 'declared'%}تعریف شده و منتظر دریافت طرح های پیشنهادی پژوهشگران
+				{%elseif d.status == 'accept'%}طرح اولیه مورد تایید قرار گرفته است
+				{%elseif d.status == 'phase'%}فازبندی طرح توسط پژوهشگر مشخص شده است.
+				{%elseif d.status == 'contract'%}در مرحله ثبت قرارداد
+				{%elseif d.status == 'study'%}در حال انجام
+				{%elseif d.status == 'ended'%}با موفقیت به اتمام رسیده
+				{%elseif d.status == 'deleted'%}حذف شده
+				{%endif%}
+			</td>
+		</tr>
+		{% else %}
+		<tr><td colspan="5" class="align-center">تاکتون تقاضایی برای پژوهش ثبت نشده است!</td></tr>
+		{%endfor%}
+
+	</tbody>
+</table>
+
+
+<hr />
+<h1>دسته بندی های اولویت های پژوهشی</h1>
+<p class="alert alert-block alert-info">
+	{%for d in d_activity_list%}
+	<a class="" href="research/{{d.slug}}"><span data-title="{{d.activity_title}}">{{d.activity_title}}</span></a> | 
+	{%endfor%}
+</p>
+
+{%endblock%}
+
+{%block before_content%}{%endblock%}
+{%block after_content%}{%endblock%}

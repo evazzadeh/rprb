@@ -1,0 +1,231 @@
+{%extends "display.html"%}
+
+{%block content%}
+
+<div class="row">
+	<div class="span5">
+
+		<div class="box cursor-help">
+			<div class="box-head fg-white">مشخصات گروه</div>
+			<div class="box1-inner">
+				<ul class="list">
+					<li>{{d_group.0.title}}</li>
+					<li>{{d_group.0.content}}</li>
+					<li>فعالیت در زمینه {{d_group.0.activity_title}}</li>
+					<li>دارای {{d_group_detail | length}} پژوهشگر عضو</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="span7">
+	</div>
+</div>
+
+<div class="row">
+	<table class="profile-data" id="groups">
+		<tbody>
+			<tr><th colspan="7" class="align-center fg-black">مشخصات اعضای گروه</th></tr>
+			<tr>
+				<th>ردیف</th>
+				<th>نام پژوهشگر</th>
+				<th>وبسایت</th>
+				<th>تحصیلات</th>
+				<th>رتبه دانشگاهی</th>
+				<th>سمت</th>
+				<th>وضعیت فعالیت</th>
+			</tr>
+			{%for d in d_group_detail%}
+			<tr>
+				<td>{{loop.index}}</td>
+				<td>
+					<a target="_blank" href="profile/{{d.user_id}}" title="مشاهده پروفایل {{d.firstname}} {{d.lastname}}">{{d.firstname}} {{d.lastname}}</a>
+				</td>
+				<td class="en"><a target="_blank" href="http://{{d.website}}" title="مشاهده وب سایت {{d.firstname}} {{d.lastname}}">{{d.website}}</a></td>
+				<td>{{d.education}} {{d.field}}</td>
+				<td>{{d.adjusted}}</td>
+				<td>
+					{%if d.type      == 'admin'%}مدیر این گروه پژوهشی
+					{%elseif d.status != 'active'%}
+					{%elseif d.type  == 'member'%}عضو گروه
+					{%endif%}
+				</td>
+				<td>
+					{%if d.status     == 'awaiting'%}متقاضی عضویت در گروه
+					{%elseif d.status == 'active'%}فعال
+					{%elseif d.status == 'dismissal'%}اخراج توسط مدیر گروه
+					{%elseif d.status == 'quit'%}استعفا
+					{%elseif d.status == 'reject'%}رد تقاضا
+					{%endif%}
+				</td>
+			</tr>
+			{% else %}
+			<tr><td colspan="7" class="align-center">این گروه هیچ عضوی ندارد!!! آیا این ممکن است!</td></tr>
+			{%endfor%}
+		</tbody>
+	</table>
+</div>
+
+{%if u_login%}
+<article>
+
+	{%if u_status == 'active'%}
+
+
+	{%if u_type=='researcher'%}
+	<section>
+
+		{%if ismember %}
+		<section>
+
+			{%if ismember.status=='awaiting' %}
+			<p class="alert alert-block alert-info">جناب {{u_lastname}} پژوهشگر محترم، تقاضای شما برا عضویت در این گروه در دست بررسی مدیر گروه می باشد.</p>
+
+			{%elseif ismember.status=='active' %}
+			<p class="alert alert-block alert-success">جناب {{u_lastname}} پژوهشگر محترم، شما یک عضو فعال این گروه هستید.</p>
+
+			{%elseif ismember.status=='dismissal' %}
+			<p class="alert alert-block alert-danger">جناب {{u_lastname}} پژوهشگر محترم، متاسفانه شما توسط مدیر گروه از این گروه اخراج شدید.</p>
+
+			{%elseif ismember.status=='quit' %}
+			<p class="alert alert-block alert-info">جناب {{u_lastname}} پژوهشگر محترم، شما از عضویت در این گروه استعفا داده اید</p>
+
+			{%elseif ismember.status=='reject' %}
+			<p class="alert alert-block alert-error">جناب {{u_lastname}} پژوهشگر محترم، تقاضای شما برای عضویت در گروه مورد تایید مدیریت این گروه پژوهشی قرار نگرفت.</p>
+
+			{%endif%}
+
+		</section>
+		{%else%}
+		<section>
+			<p class="alert alert-block alert-info">جناب {{u_lastname}} پژوهشگر محترم، شما به راحتی می توانید عضو این گروه شوید.</p>
+			{% import "./macro/form.html" as forms %}
+			<form method="post" id="joingroup" class="ajx">{{forms.make(form)}}</form>
+		</section>
+		{%endif%}
+
+
+	</section>
+	{%endif%}
+
+
+	{%else%}
+	<p class="alert alert-block alert-danger">اکانت شما فعال نیست! با مدیریت سایت تماس بگیرید.</p>
+	{%endif%}
+
+</article>
+{%else%}
+<p class="alert alert-block alert-danger">برای دسترسی به اطلاعات بیشتر وارد سامانه شوید</p>
+{%endif%}
+
+
+
+<section>
+	<div class="row">
+		<table class="profile-data" id="users-research_status">
+			<tbody>
+				<tr><th colspan="5" class="align-center fg-black">وضعیت پژوهش های در حال انجام</th></tr>
+				<tr>
+					<th>ردیف</th>
+					<th>عنوان پژوهش</th>
+					<th>توضیح</th>
+					<th>وضعیت</th>
+				</tr>
+				{%for d in d_r_list%}
+				<tr>
+					<td>{{loop.index}}</td>
+					<td><a href="research/{{d.research_id}}">{{d.title}}</a></td>
+					<td>{{d.content}}</td>
+					<td>
+						{%if d.status     == 'declared'%}تعریف شده و منتظر دریافت طرح های پیشنهادی پژوهشگران
+						{%elseif d.status == 'accept'%}طرح اولیه مورد تایید قرار گرفته است
+						{%elseif d.status == 'phase'%}فازبندی طرح توسط پژوهشگر مشخص شده است.
+						{%elseif d.status == 'contract'%}در مرحله ثبت قرارداد
+						{%elseif d.status == 'study'%}در حال انجام
+						{%elseif d.status == 'ended'%}با موفقیت به اتمام رسیده
+						{%elseif d.status == 'deleted'%}حذف شده
+						{%endif%}
+					</td>
+				</tr>
+				{% else %}
+				<tr><td colspan="5" class="align-center">تاکتون این گروه فعالت پژوهشی در این سامانه نداشته است</td></tr>
+				{%endfor%}
+			</tbody>
+		</table>
+	</div>
+
+
+	<div class="row">
+		<table class="profile-data" id="users-researchproposal_status">
+			<tbody>
+				<tr><th colspan="6" class="align-center fg-black">وضعیت پروپوزال های ارسال شده</th></tr>
+				<tr>
+					<th>ردیف</th>
+					<th>توضیح</th>
+					<th>قیمت</th>
+					<th>مدت زمان</th>
+					<th>وضعیت</th>
+				</tr>
+				{%for d in d_rp_list%}
+				{%if d.status=='accept'%}<tr class="alert-success">
+				{%else%}
+				<tr>
+					{%endif%}
+					<td>{{loop.index}}</td>
+					<td>{{d.content}}</td>
+					<td>{{d.price}}</td>
+					<td>{{d.day}}</td>
+					<td>
+						{%if d.status=='check' %}در حال بررسی
+						{%elseif d.status=='accept' %}<a href="research/{{d.research_id}}">تایید شده</a>
+						{%elseif d.status=='reject' %}رد شده
+						{%endif%}
+					</td>
+				</tr>
+				{% else %}
+				<tr><td colspan="5" class="align-center">تاکتون این گروه فعالت پژوهشی در این سامانه نداشته است</td></tr>
+				{%endfor%}
+			</tbody>
+		</table>
+	</div>
+
+	<hr />
+	<div class="row">
+		<table class="profile-data" id="users-research_suggest">
+			<tbody>
+				<tr><th colspan="4" class="align-center fg-black">تقاضاهای پژوهشی مرتبط با گروه</th></tr>
+				<tr>
+					<th>ردیف</th>
+					<th>عنوان پژوهش</th>
+					<th>توضیح</th>
+					<th>وضعیت</th>
+				</tr>
+				{%for d in d_r_sug_list%}
+				<tr>
+					<td>{{loop.index}}</td>
+					<td><a href="research/{{d.research_id}}">{{d.title}}</a></td>
+					<td>{{d.content}}</td>
+					<td>
+						{%if d.status     == 'declared'%}تعریف شده و منتظر دریافت طرح های پیشنهادی پژوهشگران
+						{%elseif d.status == 'accept'%}طرح اولیه مورد تایید قرار گرفته است
+						{%elseif d.status == 'phase'%}فازبندی طرح توسط پژوهشگر مشخص شده است.
+						{%elseif d.status == 'contract'%}در مرحله ثبت قرارداد
+						{%elseif d.status == 'study'%}در حال انجام
+						{%elseif d.status == 'ended'%}با موفقیت به اتمام رسیده
+						{%elseif d.status == 'deleted'%}حذف شده
+						{%endif%}
+					</td>
+				</tr>
+				{% else %}
+				<tr><td colspan="4" class="align-center">در حال حاضر تقاضایی مرتبط با زمینه فعالیت این گروه موجود نیست</td></tr>
+				{%endfor%}
+			</tbody>
+		</table>
+	</div>
+</section>
+
+
+
+{%endblock%}
+{%block before_content%}{%endblock%}
+{%block after_content%}{%endblock%}

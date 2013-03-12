@@ -1,0 +1,17 @@
+{%extends "display.html"%}
+
+{%block content%}
+
+{%if isused >0 %}
+	<p class="alert alert-block alert-danger">شما یکبار از طریق این کد گذرواژه خود را بازیابی نموده اید. برای بازیابی مجدد باید درخواست جدیدی صادر کنید.</p>
+{%else%}
+	<p class="alert alert-block alert-info">با تایید توسط دکمه زیر گذرواژه جدید به ایمیل شما ارسال خواهد شد. آیا اطمینان دارید؟</p>
+	{% import "./macro/form.html" as forms %}
+	<form method="post" id="forgottenaccept" class="ajx">{{forms.make(form)}}</form>
+
+{%endif%}
+
+{%endblock%}
+
+{%block before_content%}{%endblock%}
+{%block after_content%}{%endblock%}

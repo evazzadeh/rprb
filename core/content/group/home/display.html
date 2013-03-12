@@ -1,0 +1,36 @@
+{%extends "display.html"%}
+
+{%block content%}
+	<p class="alert alert-block alert-info">مشخصات گروه های موجود در سامانه را در لیست زیر مشاهده می کنید. <a href="group/create">شما هم گروه خودتان را بسازید.</a></p>
+	
+
+
+<table class="profile-data" id="groups">
+	<tbody>
+		<tr><th colspan="4" class="align-center fg-black">گروه های پژوهشی موجود</th></tr>
+		<tr>
+			<th>ردیف</th>
+			<th>عنوان</th>
+			<th>توضیح</th>
+			<th>زمینه فعالیت</th>
+		</tr>
+		{%for d in d_group_list%}
+		<tr>
+			<td>{{loop.index}}</td>
+			<td><a href="group/{{d.group_id}}">{{d.title}}</a></td>
+			<td>{{d.content}}</td>
+			<td>{{d.activity_title}}</td>
+			
+		</tr>
+		{% else %}
+		<tr><td colspan="5" class="align-center">تاکتون کتابی ثبت نشده است</td></tr>
+		{%endfor%}
+			
+	</tbody>
+</table>
+
+
+{%endblock%}
+
+{%block before_content%}{%endblock%}
+{%block after_content%}{%endblock%}

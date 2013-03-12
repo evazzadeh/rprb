@@ -1,0 +1,230 @@
+{%extends "display.html"%}
+
+{%block content%}
+<section>
+	{%if iftulogin%}
+	<a href="research" class="roller"><span data-title="مشاهده اولویت های پژوهشی">مشاهده اولویت های پژوهشی</span></a> |
+	<a href="research/add" class="roller"><span data-title="تعریف یک اولویت پژوهشی">تعریف یک اولویت پژوهشی</span></a> |
+	<a href="group" class="roller"><span data-title="مشاهده گروه های پژوهشی">مشاهده گروه های پژوهشی</span></a>
+	{%endif%}
+
+	<div class="row">
+		<div class="span5">
+			<table class="profile-data changetime xlogin_{{iftulogin}}" id="users-data" action='profile'>
+				<tbody>
+					<tr><th colspan="2" class="align-center fg-black">مشخصات بنگاه اقتصادی</th></tr>
+					{%for d in d_users%}
+					<tr>
+						<th>نام</th>
+						<td><label for="firstname">{{d.firstname}}</label></td>
+					</tr>
+					<tr>
+						<th>نام خانوداگی</th>
+						<td><label for="lastname">{{d.lastname}}</label></td>
+					</tr>
+					<tr>
+						<th>تارنما</th>
+						<td class="align-left"><label for="website">{{d.website}}</label></td>
+					</tr>
+					<tr>
+						<th>رایانامه</th>
+						<td class="align-left"><label for="email">{{d.email}}</label></td>
+					</tr>
+					<tr>
+						<th>تلفن</th>
+						<td class="align-left"><label for="tel">{{d.tel}}</label></td>
+					</tr>
+					{%endfor%}
+
+					{%for d in d_companies%}
+					<tr>
+						<th>شماره ثبت</th>
+						<td><label for="code">{{d.code}}</label></td>
+					</tr>
+					<tr>
+						<th>تاریخ ثبت</th>
+						<td><label for="date">{{d.date}}</label></td>
+					</tr>
+					<tr>
+						<th>کشور محل ثبت</th>
+						<td><label for="country">{{d.country}}</label></td>
+					</tr>
+					<tr>
+						<th>آدرس</th>
+						<td><label for="address">{{d.address}}</label></td>
+					</tr>
+					<tr>
+						<th>نوع تولید</th>
+						<td><label for="type">{{d.type}}</label></td>
+					</tr>
+					<tr>
+						<th>کد آیسیک محصول</th>
+						<td><label for="isic">{{d.isic}}</label></td>
+					</tr>
+					<tr>
+						<th>ظرفیت تولید</th>
+						<td><label for="capacity">{{d.capacity}}</label></td>
+					</tr>
+					<tr>	<th>تعداد پرسنل</th>
+						<td><label for="personnel">{{d.personnel}}</label></td>
+					</tr>
+					<tr>
+						<th>نام مدیر واحد توسعه و تحقیق</th>
+						<td><label for="rd_name">{{d.rd_name}}</label></td>
+					</tr>
+					<tr>
+						<th>شماره تماس مدیر واحد توسعه و تحقیق</th>
+						<td><label for="rd_tel">{{d.rd_tel}}</label></td>
+					</tr>
+					<tr>
+						<th>اولویت تولیدات</th>
+						<td><label for="priority">{{d.priority}}</label></td>
+					</tr>
+					<tr>
+						<th>میزان مصرف سالانه انرژی الکتریکی</th>
+						<td><label for="electric">{{d.electric}}</label></td>
+					</tr>
+					<tr>
+						<th>میزان مصرف سالانه آب</th>
+						<td><label for="water">{{d.water}}</label></td>
+					</tr>
+					<tr>
+						<th>میزان مصرف سالانه حامل های انرژی</th>
+						<td><label for="energy">{{d.energy}}</label></td>
+					</tr>
+					<tr>
+						<th>نوع حامل های انرژی</th>
+						<td><label for="energy_type">{{d.energy_type}}</label></td>
+					</tr>
+					<tr>
+						<th>درباره</th>
+						<td><label for="about">{{d.about}}</label></td>
+					</tr>
+
+					{%endfor%}
+					<tr>
+						<th>زیرمجموعه فعالیت</th>
+						<td><label for="title" data-child='{{_activities}}'>{{d_activity}}</label></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="span7">
+
+			<table class="profile-data" id="users-research_status">
+				<tbody>
+					<tr><th colspan="4" class="align-center fg-black">وضعیت تقاضاهای ثبت شده</th></tr>
+					<tr>
+						<th>ردیف</th>
+						<th>عنوان تقاضا</th>
+						<th>توضیح</th>
+						<th>وضعیت</th>
+					</tr>
+					{%for d in d_r_list%}
+					<tr>
+						<td>{{loop.index}}</td>
+						<td><a href="research/{{d.research_id}}">{{d.title}}</a></td>
+						<td>{{d.content}}</td>
+
+						<td>
+							{%if d.status     == 'declared'%}تعریف شده و منتظر دریافت طرح های پیشنهادی پژوهشگران
+							{%elseif d.status == 'accept'%}طرح اولیه مورد تایید قرار گرفته است
+							{%elseif d.status == 'phase'%}فازبندی طرح توسط پژوهشگر مشخص شده است.
+							{%elseif d.status == 'contract'%}در مرحله ثبت قرارداد
+							{%elseif d.status == 'study'%}در حال انجام
+							{%elseif d.status == 'ended'%}با موفقیت به اتمام رسیده
+							{%elseif d.status == 'deleted'%}حذف شده
+							{%endif%}
+						</td>
+					</tr>
+					{% else %}
+					<tr><td colspan="4" class="align-center">تاکتون تقاضایی ثبت نشده است</td></tr>
+					{%endfor%}
+				</tbody>
+			</table>
+
+
+
+			{%if iftulogin%}
+			<table class="profile-data xlogin_{{iftulogin}} changetime" id="users-upload" action='profile'>
+				<tbody>
+					<tr><th colspan="4" class="align-center fg-black">عناوین و مستندات آپلود شده</th></tr>
+					<tr>
+						<th>ردیف</th>
+						<th>عنوان</th>
+						<th>توضیح</th>
+					</tr>
+					{%for d in d_up_list%}
+					<tr rowid="{{d.id}}">
+						<td>{{loop.index}}</td>
+						<td><a target="_blank" href="updfiles/filesuplaod_{{d.addr_id}}/{{d.filename}}.{{d.type}}">{{d.title}}</a></td>
+						<td>{{d.description}}</td>
+						
+					</tr>
+					{% else %}
+					<tr><td colspan="5" class="align-center">تاکتون مدارکی آپلود نشده است</td></tr>
+					{%endfor%}
+					<tr id="goadd-upload">
+						<td colspan="5" class="align-center"><a class='add option-add_{{iftulogin}}'>بارگزاری مدارک</a></td>
+					</tr>
+				</tbody>
+			</table>
+			{%endif%}
+
+
+
+
+			{%if iftulogin%}
+			شما در حال مشاهده پروفایل خود هستید
+			{%endif%}
+
+		</div>
+	</div>
+</section>
+
+<a target="_blank" href="http://fa.gravatar.com/" title="گراواتار خود را تغییر دهید"><img src="{{d_user_grav}}" alt="{{d_users.firstname}} {{d_users.lastname}}" id="profile-avatar"></img></a>
+
+
+
+
+
+
+
+
+{%if iftulogin%}
+<form action="profile" id="add-users-upload" class="form-macro" method="post"
+enctype="multipart/form-data">
+<input type="hidden" name="_post" value="uploadedit" class="profile-data">
+<table>
+	<tbody>
+		<tr>
+			<th>عنوان</th>
+			<th>انتخاب فایل</th>
+			<th>توضیح</th>
+		</tr>
+		<tr>
+			<td><label><select name="title">
+				<option value="کارت ملی">کارت ملی</option>
+				<option value="شناسنامه">شناسنامه</option>
+				<option value="مدرک تحصیلی">مدرک تحصیلی</option>
+				<option value="گواهی عضو هیئت علمی">گواهی عضو هیئت علمی</option>
+			</select></label></td>
+			<td><label><input type="file" name='fileupd' style="width:100px"></label></td>
+			<td><label><input name='description'></label></td>
+		</tr>
+		<tr>
+			<td colspan="5" class="align-center">
+				<input type="submit" class="submit-fadeadd" value="آپلود فایل">
+			</td>
+		</tr>
+	</tbody>
+</table>
+</form>
+{%endif%}
+
+
+{%endblock%}
+
+{%block before_content%}{%endblock%}
+{%block after_content%}{%endblock%}

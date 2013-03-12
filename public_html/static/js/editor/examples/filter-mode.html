@@ -1,0 +1,33 @@
+<!doctype html>
+<html dir="rtl">
+	<head>
+		<meta charset="utf-8" />
+		<title>Filter Mode Examples</title>
+		<style>
+			body {
+				font-family:tahoma;
+			}
+			form {
+				margin: 0;
+			}
+			textarea {
+				display: block;
+			}
+		</style>
+		<script charset="utf-8" src="../kindeditor-min.js"></script>
+		<script charset="utf-8" src="../lang/zh_CN.js"></script>
+		<script>
+			KindEditor.ready(function(K) {
+				K.create('textarea[name="content"]', {
+					filterMode : true
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<h3>صافی HTML</h3>
+		<form>
+			<textarea name="content" style="width:800px;height:200px;"></textarea>
+		</form>
+	</body>
+</html>

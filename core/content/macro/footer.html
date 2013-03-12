@@ -1,0 +1,79 @@
+{% spaceless %}
+{% if show_footer%}
+<footer>
+  <div id="footer">
+
+    <div class="light1 row-padding-medium">
+      <div class="container">
+        <div class="row">
+
+          <div class="span12">
+            <p >
+              <a class="roller cursor-help" href="what"><span data-title="هدف این سامانه چیست؟">هدف این سامانه چیست؟</span></a> |
+              <a class="roller cursor-help" href="how"><span data-title="این سامانه چطور کار می کند؟">این سامانه چطور کار می کند؟</span></a> |
+              <a class="roller cursor-help" href="who"><span data-title="این سامانه برای چه کسانی است؟">این سامانه برای چه کسانی است؟</span></a> |
+              <a class="roller cursor-help" href="faq"><span data-title="سوالات متداول">سوالات متداول</span></a> |
+              <a class="roller cursor-help" href="terms"><span data-title="شرایط و قوانین">شرایط و قوانین</span></a> |
+              <a class="roller cursor-help" href="privacy"><span data-title="حریم خصوصی">حریم خصوصی</span></a>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="span12">
+            <p >تمام حقوق این وب سایت برای <a href="{{site_url}}" title="{{site_desc}}" class="roller cursor-help"><span data-title="{{site_title}}">{{site_title}}</span></a> محفوظ است.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</footer>
+{%endif%}
+<section>
+  <div id="ajaxbfload">      
+    <svg version="1.1" id="loading_rprb" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="250" viewBox="14 10.375 300.25 170.375" enable-background="new 14 10.375 300.25 170.375" xml:space="preserve" style="margin-right:auto; margin-left:auto">
+      <defs><style type="text/css"><![CDATA[#loading_rprb path{opacity:0.05;-webkit-animation: fadeit 2.1s linear infinite;animation: fadeit 2.1s linear infinite;}#loading_rprb path:nth-child(1) {-webkit-animation-delay: -1.5s;animation-delay: -1.5s;}#loading_rprb path:nth-child(2) {-webkit-animation-delay: -1.1s;animation-delay: -1.1s;}#loading_rprb path:nth-child(3) {-webkit-animation-delay: -1.0s;animation-delay: -1.0s;}#loading_rprb path:nth-child(4) {-webkit-animation-delay: -0.9s;animation-delay: -0.9s;}#loading_rprb path:nth-child(5) {-webkit-animation-delay: -0.5s;animation-delay: -0.5s;}@-webkit-keyframes fadeit{0%{ opacity:1; }100%{ opacity:0.1;}}@keyframes fadeit{0%{ opacity:1; }100%{ opacity:0.1;}}]]></style></defs>
+      <path fill="#A6BFC9" d="M190.621,139.391c14.591-14.969,36.018-28.622,65.318-34.978c14.772-3.274,27.805-3.116,35.108,11.024
+      c4.853,9.784,14.125,28.186,17.943,36.318c9.945,20.724,1.75,34.574-16.805,25.717c-25.816-12.558-66.729-14.577-97.641-3.95
+      c-3.19,1.24-3.346,0.253-3.117-2.152C192.419,162.743,192.265,150.887,190.621,139.391z"/>
+      <path class="mixa" fill="#A6BFC9" d="M154.322,162.303c-12.232-22.553-38.221-48.283-82.32-57.839c-14.77-3.27-27.798-3.112-35.101,11.01
+      c-4.851,9.771-14.122,28.147-17.939,36.27c-9.942,20.694-1.749,34.527,16.8,25.68c27.679-13.445,72.715-14.795,104.16-1.438
+      C151.83,181.46,165.932,184.854,154.322,162.303z"/>
+      <path fill="#A6BFC9" d="M140.927,58.566c30.819,23.175,47.201,72.249,43.542,112.014c-0.496,10.523-11.579,13.041-14.306,4.384
+      c-7.51-24.105-29.317-52.196-73.98-70.705c-4.018-1.705-6.272-5.263-3.365-10.437c5.32-9.09,12.07-20.706,18.075-31.035
+      C115.41,54.591,125.746,46.599,140.927,58.566z"/>
+      <path fill="#A6BFC9" d="M187.36,58.565c-7.024,5.286-13.298,11.921-18.753,19.485c14.337,21.806,18.933,44.199,20.65,51.842
+      c11.038-9.49,25.124-18.32,42.792-25.648c4.015-1.705,6.267-5.261,3.361-10.433c-5.314-9.089-12.056-20.701-18.054-31.027
+      C212.846,54.591,202.523,46.601,187.36,58.565z"/>
+      <path fill="#A6BFC9" d="M138.298,32.828L156.7,14.426c3.938-3.938,10.326-3.938,14.265,0l18.402,18.402
+      c3.938,3.939,3.938,10.325,0,14.265l-18.402,18.402c-3.938,3.938-10.326,3.939-14.265,0l-18.402-18.402
+      C134.359,43.154,134.358,36.767,138.298,32.828z"/>
+    </svg>
+  </div>
+
+  <div id="searchModal" class="modalDialog">
+    <div>
+      <a href="#" title="Close" class="close">X</a>
+      <h2>جستجو</h2>
+      <p>برای جستجو می توانید از فرم زیر استفاده کنید</p>
+      <div class="search_form">
+        <form action="" method="post">
+          <input type="text" name="search_box" id="search_box" placeholder="جستجوی پیشرفته" />
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+ (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-47120102-1', 'rprb.ir');
+ga('send', 'pageview');
+</script>
+{% endspaceless %}

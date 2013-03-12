@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!-- [if lte IE 8]><script>document.location = 'http://www.whatbrowser.org/intl/fa/';</script><![endif] -->
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<base href="{{site_url}}" />
+	<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/><![endif]-->	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+	<title>{{title}}</title>
+	<meta name="description" content="{{site_desc}}"/>
+	<meta property="og:title" content="{{title}}"/>
+	<meta property="og:site_name" content="{{site_title}}"/>
+	<meta property="og:description" content="{{site_desc}}"/>
+	<meta property="og:type" content="website"/>
+	<meta property="og:url" content="{{site_url}}"/>
+	<meta property="og:image" content="{{template_static}}images/logo.png"/>
+	<meta property='og:locale' content='fa_IR'/>
+
+	<link href="{{template_static}}css/style.css?ver=1.4.6" rel="stylesheet" type="text/css">
+	<link href="{{template_static}}images/favicon.png" rel="shortcut icon">
+	<link href="{{template_static}}humans.txt" type="text/plain" rel="author" />
+	<script type="text/javascript" src="{{template_static}}js/jquery-modern.js"></script>
+	<script type="text/javascript" src="{{template_static}}js/formajax.js"></script>
+	<script type="text/javascript" src="{{template_static}}js/changetime.js"></script>
+{%block m_header%}{%endblock%}
+</head>
+<body id="{{page_class}}">
+
+	{% embed 'macro/header.html' %}{% endembed %}
+
+	<article>
+		{%block before_content%}{%endblock%}
+
+		{%if show_main%}
+		<div class="container" id="main">
+			{%if show_page_title%}<h2>{{page_title|raw}}</h2><hr />{%endif%}
+			{%block content%}{%endblock%}
+		</div>
+
+		{%endif%}
+		{%block after_content%}{%endblock%}
+	</article>
+
+
+	{%if error.msg or error.fatal or error.true or error.warn%}
+	<div id="formError" class="error_{{error.status}}">
+		{%for err in error%}
+		<ul>
+			{%for e in err%}
+			<li>
+				{{e}}
+			</li>
+			{%endfor%}
+		</ul>
+		{%endfor%}
+	</div>
+	{%endif%}
+	{% include 'macro/footer.html' %}
+	{%block m_footer%}{%endblock%}
+</body>
+</html>

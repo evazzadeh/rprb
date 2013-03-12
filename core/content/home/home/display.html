@@ -1,0 +1,244 @@
+{%extends "display.html"%}
+
+{%block before_content%}
+{%if u_login%}
+
+
+
+<div class="white row-padding-small">
+	<div class="container">
+		<div class="row">
+			<div class="span2 visible-desktop" id="ad1">
+				<a target="_blank" href="http://alame.edu.tvu.ac.ir" title="آموزشکده فنی و حرفه ای پسران آمل"><img src="{{template_static}}images/ad/ad-amol-tvto.png"></a>
+				<a target="_blank" href="http://www.khze.com" title="شرکت خزر الکتریک"><img src="{{template_static}}images/ad/ad-khazar-electric.png"></a>
+				<a target="_blank" href="http://www.ifco.ir" title="شرکت بهینه سازی مصرف سوخت"><img src="{{template_static}}images/ad/ad-optimize-use.png"></a>
+				<a target="_blank" href="http://www.idro.org" title="سازمان گسترش و نوسازی صنایع ایران"><img src="{{template_static}}images/ad/ad-sanaye.png"></a>
+			</div>
+			<div class="span3">
+				<div class="box">
+					<div class="box-head fg-white"><a href="research/" class="none" title="آرشیو پژوهش های در حال انجام">پژوهش های در حال انجام</a></div>
+					<div class="box1-inner">
+						<ul class="list">
+							{%for d in lastresearch_s%}
+							<li>
+								<a href="research/{{d.research_id}}">{{d.title}}</a>
+							</li>
+							{%endfor%}
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="span3">
+				<div class="box">
+					<div class="box-head fg-white"><a href="research/" class="none" title="آرشیو تقاضاهای ثبت شده">آخرین تقاضاهای ثبت شده</a></div>
+					<div class="box1-inner">
+						<ul class="list">
+							{%for d in lastresearch_d%}
+							<li>
+								<a href="research/{{d.research_id}}">{{d.title}}</a>
+							</li>
+							{%endfor%}
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="span4">
+
+				<div class="box">
+					<div class="box-head fg-white"><a href="news/" class="none" title="آرشیو اخبار">آخرین اخبار</a></div>
+					<div class="box1-inner">
+						<ul class="list">
+							{%for d in lastnews%}
+							<li>
+								<a href="{{site_url}}{{d.slug_cat}}/{{d.slug}}">{{d.title}}</a>
+							</li>
+							{%endfor%}
+						</ul>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+{%else%}
+
+
+<div class="white row-padding-small2">
+	<div class="container">
+		<div class="row">
+			<div class="span7">
+				<h1>{{site_title}}</h1>
+				<br />
+				<p>{{site_desc}}</p>
+				<p>برای استفاده از امکانات سیستم ثبت نام نمایید.
+				</p>
+				<a href="register" class="lnk-register hint--top" title="ثبت نام در {{site_title}}" data-hint="برای استفاده از امکانات سیستم و عضویت در جامعه بزرگ پژوهشی کشور نیاز به ثبت نام دارید. همین حالا اقدام کنید.">ثبت نام</a>
+
+			</div>
+			<div class="span4 offset1">
+				{% include 'macro/login.html' %}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="gray row-padding-medium">
+	<div class="container">
+		<p class="alert  alert-success align-center">این سامانه با حمایت های معاونت پژوهشی وزارت علوم، تحقیقات و فناوری در دانشگاه فنی و حرفه ای راه اندازی گردیده است.</p>
+		<div class="row">
+		</div>
+		<div class="row row-padding-medium">
+
+			<div class="span2 visible-desktop" id="ad1">
+				<a target="_blank" href="http://alame.edu.tvu.ac.ir" title="آموزشکده فنی و حرفه ای پسران آمل"><img src="{{template_static}}images/ad/ad-amol-tvto.png"></a>
+				<a target="_blank" href="http://www.khze.com" title="شرکت خزر الکتریک"><img src="{{template_static}}images/ad/ad-khazar-electric.png"></a>
+				<a target="_blank" href="http://www.ifco.ir" title="شرکت بهینه سازی مصرف سوخت"><img src="{{template_static}}images/ad/ad-optimize-use.png"></a>
+				<a target="_blank" href="http://www.idro.org" title="سازمان گسترش و نوسازی صنایع ایران"><img src="{{template_static}}images/ad/ad-sanaye.png"></a>
+			</div>
+			<div class="span6">
+				<h2>درباره {{site_title}}</h2>
+				<hr />
+				<p>هدف از راه اندازی سامانه تحت وب پژوهشهای تقاضا محور ارتباط مستقیم بین متخصصین دانشگاهی، صنایع کشور و بنگاه های اقتصادی است.</p>
+				<p>حفظ منابع مالی در بخش خصوصی از طریق کمک به ارتقا بهره وری و کاهش وابستگی پروژه های پژوهشی به بودجه دولتی از اهداف دیگر این طرح می باشد.</p>
+				<p>در این سامانه بنگاه های اقتصادی، نهادها و سازمانهای دولتی و خصوصی در فضاهای دسته بندی شده ضمن معرفی مجموعه خود، اقدام به طرح مساله در حوزه های گوناگون فضای کسب وکار از چالشهای سازمانی مانند مهندسی فاکتورهای انسانی، مهندسی مالی تا  مهندسی نگهداری و تعمیرات پیشبینانه و پیشگیرانه می نمایند.</p>
+			</div>
+			<div class="span4">
+
+				<div class="box">
+					<div class="box-head fg-white"><a href="news/" class="none" title="آرشیو اخبار">آخرین اخبار</a></div>
+					<div class="box1-inner">
+						<ul class="list">
+							{%for d in lastnews%}
+							<li>
+								<a href="{{site_url}}{{d.slug_cat}}/{{d.slug}}">{{d.title}}</a>
+							</li>
+							{%endfor%}
+						</ul>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+{%endif%}
+
+
+<div class="blue1 row-padding-medium">
+	<div class="container">
+
+
+		<div class="row">
+			<div class="span4">
+				<div class="box">
+					<div class="box-head2 fg-white"><a href="researchers/" class="none" title="آرشیو پژوهشگران">آخرین پژوهشگران</a></div>
+					<div class="box1-inner">
+						<ul class="list">
+							{%for d in lastresearcher%}
+							<li>
+								<a href="profile/{{d.user_id}}">{{d.firstname}} {{d.lastname}}</a>
+							</li>
+							{%endfor%}
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="span4">
+				<div class="box">
+					<div class="box-head2 fg-white"><a href="companies/" class="none" title="آرشیو بنگاه‌های اقتصادی">آخرین بنگاه‌های اقتصادی</a></div>
+					<div class="box1-inner">
+						<ul class="list">
+							{%for d in lastcompany%}
+							<li>
+								<a href="profile/{{d.user_id}}">{{d.firstname}} {{d.lastname}}</a>
+							</li>
+							{%endfor%}
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="span4 visible-desktop">
+				<div class="box">
+					<div class="box-head2 fg-white"><a href="group/" class="none" title="آرشیو آخرین گروه ها">آخرین گروه ها</a></div>
+					<div class="box1-inner">
+						<ul class="list">
+							{%for d in lastgroup%}
+							<li>
+								<a href="group/{{d.group_id}}">{{d.title}}</a>
+							</li>
+							{%endfor%}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="gray row-padding-medium">
+	<div class="container">
+		<div class="row">
+			<div class="span2"><h4><a class="roller" href="article/"><span data-title="آرشیو مقالات">آخرین مقالات</span></a></h4></div>
+			{%for d in lastarticle%}
+
+			<div class="span2">
+
+				<a class="roller" href="{{site_url}}{{d.slug_cat}}/{{d.slug}}"><span data-title="{{d.title}}">{{d.title}}</span></a>
+			</div>
+			
+			{%endfor%}
+
+		</div>
+		<hr />
+
+		<div class="row row-padding-small2">
+			<div class="span6">
+				<h6>استفاده از این سامانه چه مزیتی برای پژوهشگران دارد؟</h6>
+				<p>مشاهده نیازهای پژوهشی و اولویت های پژوهشی بنگاه های اقتصادی، ارائه توانمندی های پژوهشگران، تشکیل شبکه علمی پژوهشگران، دسترسی به بانک اطلاعاتی پژوهش های سفارشی و کاربردی</p>
+			</div>
+			<div class="span6">
+				<h6>این سامانه برای چه اشخاص یا گروه هایی تهیه شده است؟</h6>
+				<p>بنگاه های اقتصادی، سازمان ها، صنایع، نهادهای دولتی و غیر دولتی از یک سو به عنوان کارفرما و  دانشگاه ها ، موسسات پژوهشی از سوی دیگر است.</p>
+			</div>
+		</div>
+
+		<div class="row row-padding-small2">
+			<div class="span6">
+				<h6>چه پژوهش‌هایی توسط این سامانه قابل انجام است؟</h6>
+				<p>برمبنای نیاز متقاضیان دریافت خدمات پژوهشی، هیچ محدودیتی در عنوان و نوع پژوهش برابر مقررات جاری کشور وجود ندارد.</p>
+			</div>
+			<div class="span6">
+				<h6>آیا این سامانه کیفیت و امنیت پژوهش ها را تضمین می کند؟</h6>
+				<p>این سامانه توسط ارائه راهکارهای نوین نظارتی، کیفیت پژوهش و امنیت اطلاعات آن را برای صاحبان بنگاه ها و همچنین پژوهشگران تضمین می نماید</p>
+			</div>
+		</div>
+
+		<div class="row row-padding-small">
+			<div class="span6">
+				<h6>این سامانه چه کمکی به شرکت ها و صنعتگران کشور می کند؟</h6>
+				<p>تبدیل مسائل و چالشهای موجود به طرح پژوهشی، بنگاه های اقتصادی، نهادها و سازمانهای دولتی و خصوصی در فضاهای دسته بندی شده ضمن معرفی مجموعه خود، اقدام به طرح مساله در حوزه های گوناگون فضای کسب وکار خود  می نمایند. همچنین به بانک اطلاعاتی پژوهشگران و یافته های جدید پژوهشی دسترسی می یابد.</p>
+			</div>
+
+			<div class="span6">
+				<h6>هزینه راه اندازی و پشتیبانی این سامانه از کجا تامین می شود؟</h6>
+				<p>هزینه راه اندازی سامانه از محل کمک های معاونت محترم پژوهشی وزارت علوم، تحقیقات و فن-آوری تامین گردیده است. در مراحل بعدی از محل درآمدهای حاصل از هزینه بالاسری اجرای پروژه ها تامین خواهد شد.</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{%endblock%}

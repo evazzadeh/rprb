@@ -1,0 +1,16 @@
+Mixa Team
+
+/* MAIN */
+Develop & Main Design: Javad Evazzadeh
+Site: http://evazzadeh.com
+
+/* SITE */
+Last update: 08/08/2013
+Doctype: HTML5
+IDE: Notepad++!
+
+/* SPECIAL THANKS */
+Programmer: Mohammad Hasan Salehi
+Designer: Sadegh Salehi
+Marketer: Mohammad MajidZadeh
+Usability: Mixa Team Members

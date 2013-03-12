@@ -1,0 +1,144 @@
+{%extends "display.html"%}
+{%block m_header%}
+        <script charset="utf-8" src="{{template_static}}js/editor/kindeditor-min.js"></script>
+        <script charset="utf-8" src="{{template_static}}js/editor/lang/fa.js"></script>
+        <script>
+        function Fsave(){
+            $("#contentframe").html($(this).find('body').html());
+        }
+            var editor;
+            KindEditor.ready(function(K) {
+                editor = K.create('textarea[name="content"]', {
+                    allowFileManager : true
+                });
+                $('.ke-edit-iframe').contents().keyup(Fsave);
+                $('.ke-edit-iframe').contents().keypress(Fsave);
+                K('input[name=getHtml]').click(function(e) {
+                    alert(editor.html());
+                });
+                K('input[name=isEmpty]').click(function(e) {
+                    alert(editor.isEmpty());
+                });
+                K('input[name=getText]').click(function(e) {
+                    alert(editor.text());
+                });
+                K('input[name=selectedHtml]').click(function(e) {
+                    alert(editor.selectedHtml());
+                });
+                K('input[name=setHtml]').click(function(e) {
+                    editor.html('<h3>Hello KindEditor</h3>');
+                });
+                K('input[name=setText]').click(function(e) {
+                    editor.text('<h3>Hello KindEditor</h3>');
+                });
+                K('input[name=insertHtml]').click(function(e) {
+                    editor.insertHtml('<strong>درج HTML</strong>');
+                });
+                K('input[name=appendHtml]').click(function(e) {
+                    editor.appendHtml('<strong>افزودن HTML</strong>');
+                });
+                K('input[name=clear]').click(function(e) {
+                    editor.html('');
+                });
+            });
+        </script>
+
+{%endblock%}
+
+{%block before_content%}
+<div class="row">
+    <div class="span2">
+        <nav class="sidebar">
+            <ul>
+                <li>
+                    <a href="admin"><i class="foundicon-home"></i>داشبورد</a>
+                    <ul>
+                        <li><a href="admin">خانه</a></li>
+                        <li><a href="{{site_url}}">مشاهده سایت</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="admin/news"><i class="foundicon-add-doc"></i>اخبار</a>
+                    <ul>
+                        <li><a href="admin/news">همه خبرها</a></li>
+                        <li><a href="admin/news/add">افزودن خبر</a></li>
+                        <li><a href="admin/category">دسته‌ها</a></li>
+                        <li><a href="admin/tag">کلیدواژه‌ها</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="admin/page"><i class="foundicon-page"></i>برگه‌ها</a>
+                    <ul>
+                        <li><a href="admin/page">همه برگه‌ها</a></li>
+                        <li><a href="admin/page/add">افزودن برگه</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="admin/media"><i class="foundicon-paper-clip"></i>رسانه‌ها</a>
+                    <ul>
+                        <li><a href="admin/media">کتابخانه</a></li>
+                        <li><a href="admin/media/add">افزودن</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="admin/user"><i class="foundicon-people"></i>کاربران</a>
+                    <ul>
+                        <li><a href="admin/user">همه کاربران</a></li>
+                        <li><a href="register">افزودن</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="admin/setting"><i class="foundicon-settings"></i>تنظیمات</a>
+                </li>
+                <li class="stick bg-red">
+                    <a href="logout"><i class="foundicon-lock"></i>خروج</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="span8 offset1">
+        <div class="row">
+            {%block admin_content%}
+            <P class="alert alert-block alert-info">به پنل مدیریت {{site_title}} خوش آمدید! برای دسترسی به بخش های مختلف از منوی سمت راست گزینه مورد نظر را انتخاب کنید.</P>
+            <br />
+            <h2>خلاصه آمار</h2>
+            <div class="row data">
+                <div class="span6">
+                    <ul class="alert alert-block alert-info">
+                        <li>تعداد پژوهشگران<span>7 نفر</span></li>
+                        <li>تعداد متقاضیان<span>3 نفر</span></li>
+                        <li>تعداد مدیران<span>1 نفر</span></li>
+                    </ul>
+                </div>
+                <div class="span6">
+                    <ul class="alert alert-block alert-info">
+                        <li>تعداد تقاضاهای ثبت شده<span>4 تقاضا</span></li>
+                        <li>تعداد پروپوزال های ارسال شده<span>9 پروپوزال</span></li>
+                        <li>تعداد تقاضاهای در مرحله قرارداد<span>1 تقاضا</span></li>
+                        <li>تعداد تقاضاهای شروع شده<span>1 تقاضا</span></li>
+                        <li>تعداد تقاضاهای به اتمام رسیده<span>2 تقاضا</span></li>
+                        <li>تعداد تقاضاهای خذف شده<span>3 تقاضا</span></li>
+                    </ul>
+                </div>
+            </div>
+            {%endblock%}
+        </div>
+    </div>
+
+</div>
+{%endblock%}
+
+
+
+
+
+{%block after_content%}
+<P id="copyright"><a href="http://mixa.ir" title="Mixa Team" class="roll-link"><span data-title="طراحی و توسعه داده شده توسط تیم میکسا">طراحی و توسعه داده شده توسط تیم میکسا</span></a></P>
+
+
+{%endblock%}

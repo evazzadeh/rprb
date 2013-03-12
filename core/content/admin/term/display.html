@@ -1,0 +1,30 @@
+{%extends "admin/home/display.html"%}
+
+
+{%block admin_content%}
+
+{%if type=='tag'%}
+<h1>کلیدواژه ها</h1>
+<a href="admin/tag/add">افزودن کلیدواژه</a>
+{%elseif type=='category'%}
+<h1>دسته ها</h1>
+<a href="admin/category/add">افزودن دسته</a>
+{%endif%}
+
+<table class="full-width">
+	<tr>
+		<th>ردیف</th>
+		<th>عنوان</th>
+		<th>نامک</th>
+		<th>توضیح</th>
+	</tr>
+	{%for d in m_terms%}
+	<tr>
+		<td>{{loop.index}}</td>
+		<td><a href="admin/{{type}}/edit/{{d.term_id}}">{{d.name}}</a></td>
+		<td class="align-left"><a href="{{d.slug}}">{{d.slug}}</a></td>
+		<td>{{d.desc}}</td>
+	</tr>
+	{%endfor%}
+</table>
+{%endblock%}
